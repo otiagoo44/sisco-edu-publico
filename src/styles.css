@@ -56,7 +56,6 @@ h1:focus {
 button {
   transition:
     background 0.18s,
-    color 0.18s,
     border-color 0.18s;
 }
 button:active {

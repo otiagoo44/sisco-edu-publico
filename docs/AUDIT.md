@@ -39,11 +39,12 @@ Se generaron capturas reales de Chrome contra el build local en **1440, 768, 390
 | Exploración de fotos y capítulos | El temporizador podía continuar mientras el profesor exploraba controles. | Media | Uso o foco de controles activa modo manual; el test espera 20s y verifica que no cambia de capítulo. |
 | Fotografías futuras del grupo | Un recorte por defecto podía ocultar compañeros o parte del proyecto. | Media | Recuerdos completos con `contain`, ajuste opcional de encuadre; capturas del sistema siempre completas. |
 | Alumnos en móvil | La captura poblada mostró controles flotantes sobre una línea del mensaje. | Media | En esta escena manual los controles pasan al pie en flujo normal; comprobación de que quedan después del mensaje y nueva captura. |
+| Cambio de recuerdos a alumnos | CI detectó controles con contraste de 4,48:1 mientras el color heredado se interpolaba sobre el nuevo fondo oscuro. | Alta | Retirar la transición global del color del texto: los cambios de escena aplican el contraste final inmediatamente; se conservan las transiciones de fondo y borde. |
 | Botón NO | El comportamiento anterior se detenía y ofrecía otra pantalla. | Funcional | Reposición repetida por proximidad, tacto y Enter/Espacio, zona acotada sin cruzar SÍ; sólo SÍ cambia a aceptación. |
 
 ## Verificación funcional y accesibilidad
 
-La ejecución completa final pasó **30/30 pruebas** en 5,4 minutos: quince pruebas en Chrome de escritorio y quince en móvil con tacto emulado. El recorrido principal se ejecutó con reloj normal en ambos; los otros escenarios usan Clock instalado antes de navegar. La suite cubre:
+La ejecución completa local pasó **30/30 pruebas** en 5,4 minutos: quince pruebas en Chrome de escritorio y quince en móvil con tacto emulado. El recorrido principal se ejecutó con reloj normal en ambos; los otros escenarios usan Clock instalado antes de navegar. La suite cubre:
 
 - Entrada sin pistas, navegación académica local, metadatos, favicon y alternativa sin JavaScript.
 - Nueve fotografías distintas en el montaje; tiempos contados después de completar las entradas y lectura de mensajes; unos 29,15s hasta los recuerdos y alrededor de 51s hasta alumnos.
@@ -57,6 +58,8 @@ La ejecución completa final pasó **30/30 pruebas** en 5,4 minutos: quince prue
 Axe y pruebas de teclado automatizadas no constituyen certificación WCAG ni una revisión completa con lector de pantalla. Se conserva foco visible, controles táctiles de al menos 44px, navegación de diálogo y nombres accesibles. La broma de NO es una excepción solicitada expresamente; no se presenta como un sistema de consentimiento.
 
 Después del último ajuste de encuadre se repitieron las dos pruebas de fotografías variables. Tras mover los controles móviles de alumnos se repitieron seis pruebas de alumnos, axe y responsive: todas pasaron. Se regeneraron las capturas afectadas para que reflejen ese ajuste.
+
+La primera ejecución remota pasó 28/30 y detectó el contraste transitorio registrado arriba. Tras corregirlo se ejecutaron cuatro pruebas de alumnos y axe con Chromium, en la configuración de CI: **4/4 correctas**. El resultado remoto posterior se informa por separado mediante el enlace a GitHub Actions.
 
 ## Calidad y rendimiento
 

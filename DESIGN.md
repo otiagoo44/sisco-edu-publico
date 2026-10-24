@@ -199,6 +199,8 @@ StudentsChapter usa retrato grande, nombre y mensaje real con entrada individual
 
 En la escena manual de alumnos, los controles globales de móvil se mantienen en el flujo del pie para no tapar declaraciones largas. En la introducción automática siguen disponibles como control flotante con espacio inferior reservado.
 
+Los cambios de tema aplican el color del texto sin interpolación, para conservar contraste durante el corte entre papel y navy. Las microinteracciones de controles pueden animar fondo y borde.
+
 ## Do's and Don'ts
 
 - Sí: partir del frontend comprobado y documentar rama/commit; diferenciar reconstrucción estática de una sesión del backend real.
