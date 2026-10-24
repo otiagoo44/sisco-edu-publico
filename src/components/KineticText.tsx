@@ -1,11 +1,14 @@
 export function KineticText({ text }: { text: string }) {
   return (
-    <span aria-label={text}>
-      {text.split(" ").map((word, i) => (
-        <span className="word-mask" aria-hidden="true" key={i}>
-          <span className="kinetic-word">{word}&nbsp;</span>
-        </span>
-      ))}
+    <span>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {text.split(" ").map((word, i) => (
+          <span className="word-mask" key={i}>
+            <span className="kinetic-word">{word}&nbsp;</span>
+          </span>
+        ))}
+      </span>
     </span>
   );
 }

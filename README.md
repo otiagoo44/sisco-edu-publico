@@ -1,67 +1,79 @@
-# OPERACIÓN PADRINO
+# SISCO-EDU / OPERACIÓN PADRINO
 
-Una sorpresa de la promoción 2026 del Bachillerato Técnico en Informática. Empieza como una presentación de SISCO-EDU y se convierte en una invitación al profesor. React + TypeScript + Vite, GSAP y CSS/SVG. Sin backend.
+Experiencia local de la promoción 2026 de Bachillerato Técnico en Informática para el **profe Danilo**. La entrada reproduce la identidad del frontend real de SISCO-EDU; sólo después de “Iniciar sistema” empieza la sorpresa.
 
-## Probar localmente
+React + TypeScript + Vite, GSAP, CSS/SVG y confeti canvas cargado al aceptar. Se conserva la base del proyecto; no hay backend, cuentas, almacenamiento de respuestas, analítica ni notificaciones.
 
-Requiere Node 22.12+ (validado con Node 24) y npm.
+## Probar
+
+Requiere Node 22.12+; validado con Node 24.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Abrir la URL indicada por Vite. “Iniciar sistema” reproduce 10,05 segundos de narración: boot 2s, diagnostic 2,4s, glitch 0,55s y montage 5,1s. La invitación espera la decisión sin límite de tiempo. Se puede pausar, saltar con el botón o Escape y repetir desde la celebración. Cambiar de pestaña pausa la presentación; se reanuda explícitamente.
-
-El audio está apagado de inicio y usa un acorde sintetizado local tras activar el control. No requiere archivos ni permisos de micrófono. Reduced-motion abre la pregunta directamente y elimina el confeti y la broma del botón. El No se mueve una vez al entrar con ratón; teclado y tacto pueden rechazar inmediatamente. “Quiero pensarlo” es una salida real y respetuosa.
-
-## Verificar producción
+Desarrollo muestra espacios pendientes para las fotos históricas y mensajes que todavía no se recibieron. Para ver exactamente lo que se publicaría:
 
 ```sh
 npm run build
 npm run preview
-npm test
-npm run design:lint
 ```
 
-Playwright arranca el preview de producción automáticamente. En Windows local utiliza Chrome instalado. En CI utiliza Chromium: `npx playwright install --with-deps chromium`. Las pruebas cubren el recorrido, duración, pausa/salto, aceptación/rechazo/duda, teclado, foco del dialog, audio, imágenes fallidas, reduced-motion, JavaScript desactivado, anchos 360/390/768/1280/1440 y axe. Los informes están en `playwright-report/` y las capturas en `artifacts/`; no se versionan automáticamente. La emulación móvil no equivale a una prueba física en iOS/Android.
+## Cargar fotos y alumnos
 
-## Fotos autorizadas
+**[Instrucciones completas de contenido](docs/CONTENT.md)**
 
-Los originales aportados se encuentran en `fotos-profe/` en el entorno de trabajo y permanecen intactos. Se excluyen de Git para no duplicarlos. Las 11 versiones WebP y sus miniaturas sí se incluyen en `public/photos/profe/` junto al manifest. No se aplican IA, retoque facial, filtros nuevos ni deformaciones. Algunas imágenes originales ya contienen filtros o collages de la promoción; sus alt lo indican.
+- `src/content/memories.ts`: recuerdos, descripción, fotos múltiples, orden, composición y fecha confirmada opcional.
+- `src/content/students.ts`: nombre, retrato, mensaje real, orden y estado borrador/publicado.
+- `public/media/recuerdos/{dragon,robotica,brasil,sisco-edu}/`: fotografías y capturas auténticas.
+- `public/media/alumnos/`: retratos autorizados.
+- `public/photos/profe/manifest.json`: las 11 fotos previas del profesor, sin retoque facial.
 
-Para reemplazarlas, colocar originales autorizados en `fotos-profe/` y ejecutar:
+Podés cargar cualquier cantidad de fotos o alumnos modificando únicamente contenido. Los borradores y alumnos incompletos no aparecen como testimonios publicados. No se inventaron nombres, opiniones, fechas o recuerdos visuales. Las fotos previas del profe no se presentan como prueba del dragón, del arca o del viaje.
+
+## Recorrido y controles
+
+1. Dashboard SISCO-EDU: módulos académicos y navegación local, sin credenciales ni pistas de la sorpresa. Reduced-motion y Escape tampoco adelantan la invitación.
+2. Verificación, pendiente, análisis y corte visual.
+3. Tres collages: nueve fotos diferentes del profesor, ordenadas de normales a espontáneas/graciosas.
+4. Recuerdos: dragón, robótica, Brasil y SISCO-EDU. Adelantos automáticos breves con anterior/siguiente capítulo; explorar fotos vuelve manual el avance.
+5. Mensajes: retratos y declaraciones a ritmo del profesor, navegación anterior/siguiente y vista general; se puede ir a la pregunta sin leerlos todos.
+6. “PROFE DANILO, ¿QUIERE SER NUESTRO PADRINO?” permanece hasta pulsar SÍ. NO se escapa repetidamente con ratón, tacto y teclado dentro de un área separada.
+7. Celebración con seis fotos, confeti y el mensaje solicitado. Permite ver las once fotos y repetir.
+
+La introducción conserva 29,15s hasta los recuerdos. Con los cuatro capítulos actuales se llega a la sección de alumnos alrededor de los 51s. No se espera a la red ni se agrega una carga artificial; los tiempos corresponden a lectura y reconocimiento. Pausa/continuar, saltar y Escape permanecen disponibles; se pausa al ocultar la pestaña. Los mensajes no avanzan solos. Las fotos y el audio tienen fallbacks.
+
+Audio apagado hasta activación explícita. Reduced-motion sustituye movimiento por cortes simples, mantiene la entrada inicial y elimina el confeti. NO se reposiciona instantáneamente en ese modo. La interacción de NO es el chiste visual solicitado, sin persistencia ni notificación.
+
+## Verificación
 
 ```sh
-npm run photos
+npm run build
+npm run design:lint
+npm test
 ```
 
-El script orienta según EXIF, reduce sin ampliar y comprime. Si no hay originales conserva el manifest actual. El manifest define id, src, thumbnail, alt, width y height; permite reemplazar el contenido sin editar componentes. No borrar los archivos publicados hasta actualizar sus referencias. Si falta el manifest, está vacío o una imagen falla, aparece un placeholder y se puede decidir igual. Las tres fotos críticas se precargan sin bloquear la interfaz. El álbum usa miniaturas lazy y `object-fit: contain` para ver la foto completa.
+Playwright prueba el build real de producción en 4173 y arranca un servidor de desarrollo en 4175 para verificar contenido configurable con fixtures rotulados como prueba. Los fixtures se interceptan dentro del navegador de tests; no modifican archivos publicados ni generan declaraciones reales. Localmente se utiliza Chrome instalado; CI instala Chromium.
 
-## Arquitectura y diseño
+Los tests cubren entrada sin pistas, metadatos y favicon, recorrido real y lectura, nueve fotos, pausa/salto/replay, NO repetido por ratón/tacto/teclado, aceptación exclusiva de SÍ, recuerdos variables, alumnos variables y borradores, exploración manual, reduced-motion, audio, fallos de manifest, axe y responsive. Las capturas revisadas están en `docs/screenshots/`; el informe de auditoría en [docs/AUDIT.md](docs/AUDIT.md). Emulación móvil no equivale a una prueba física en iOS/Android.
 
-- `src/state.ts`: máquina explícita `boot → diagnostic → glitch → montage → invitation → accepted | declined`. Eventos inválidos conservan el estado; reconsiderar retorna a la invitación y replay al comienzo.
-- `src/hooks.ts`: timeline GSAP por escena con limpieza de contexto, pausa y avance; reduced-motion dinámico.
-- `src/components/`: BootIntro, Diagnostic, GlitchTransition, PhotoMontage, Invitation, AcceptanceCelebration, AudioControl, SkipControl y MemoriesDialog aislados.
-- `src/confetti.ts`: importación dinámica sólo al aceptar, 65/110 partículas, duración máxima 4,8 segundos, sin listeners permanentes.
-- `DESIGN.md`: dirección, fuentes, tokens y criterios. `npm run design:tokens` exporta a CSS nativo mediante la CLI oficial incluida en la skill local. Regenerar tokens si cambia el YAML; no editar `src/tokens.css` a mano.
-- `docs/AUDIT.md`: auditoría final guiada por Impeccable y sus límites.
+`scripts/capture-review.mjs` captura el build local de 4174 en 1440, 768, 390 y 360px. `REVIEW_URL` permite capturar desarrollo y ver placeholders. `scripts/research-references.mjs` documenta capturas de las referencias públicas. No hay generadores de imágenes ni alteración de rostros.
 
-No hay almacenamiento de respuestas, notificaciones, analítica, cookies ni llamadas a servicios de terceros en el navegador. Recargar vuelve al inicio. Los textos no afirman envío ni persistencia. Sin JavaScript queda una invitación textual en `noscript`. Los controles no bloquean navegación ni historial.
+## Diseño y procedencia
 
-## Publicar en Vercel cuando se autorice
+[DESIGN.md](DESIGN.md) es la autoridad de tokens, composición y ritmo. `npm run design:tokens` exporta los tokens con la CLI oficial de Google DESIGN.md incluida en las skills; no editar `src/tokens.css` a mano.
 
-El repositorio incluye `vercel.json`, lockfile y configuración Vite. No requiere variables de entorno ni servicios.
+Se leyeron y aplicaron Awesome Design MD, UI UX Pro Max, Google DESIGN.md, Taste e Impeccable. Las licencias y procedencia permanecen en `.agents/skills/`. La auditoría usa la adaptación local de Impeccable, no una CLI inexistente.
 
-1. Importar `otiagoo44/sisco-edu-publico` en Vercel y seleccionar `main` cuando corresponda publicar.
-2. Root Directory: raíz del repositorio. Framework Preset: Vite.
-3. Install: `npm ci`. Build: `npm run build`. Output: `dist`. Node: 24.x.
-4. Revisar el preview, las fotos y la experiencia con el dispositivo que se usará frente al profe antes de compartir el enlace.
+SISCO-EDU original: [repositorio](https://github.com/dfranco906/sisco-edu), [dashboard frontend](https://github.com/dfranco906/sisco-edu/blob/frontend/mvc/views/dashboard.php), [tema](https://github.com/dfranco906/sisco-edu/blob/frontend/public/css/theme.css). Main/develop sólo ofrecen un dashboard básico sin estilos; frontend contiene la interfaz sobria de panel claro, sidebar navy y módulos que se reconstruye aquí. No se copió el backend ni una sesión de usuario.
 
-La preparación local y el push no ejecutan comandos de despliegue. Si se conecta la integración Git de Vercel, los pushes posteriores pueden generar despliegues automáticos según la configuración de ese proyecto. `noindex` reduce indexación pero no sustituye un control de acceso.
+Referencias artísticas: los análisis completos Nike y Spotify de Awesome Design MD y sus sitios oficiales. Se toma protagonismo fotográfico y tipografía de campaña de Nike, y discreción de controles de Spotify; no se copian marcas ni secciones comerciales. Fuentes locales Space Grotesk e IBM Plex Mono con licencias en `public/licenses/`.
 
-## Fuentes y licencias
+## Vercel
 
-Skills revisadas: Awesome Design MD, UI UX Pro Max, Google DESIGN.md, Taste e Impeccable. Sus instrucciones, procedencias y licencias permanecen en `.agents/skills/`. Se aplicaron criterios de diseño y auditoría; no se ejecutó una supuesta CLI de Impeccable. UI UX Pro Max devolvió un sistema genérico inapropiado y cero coincidencias en el reintento de producto; ese resultado se documenta en DESIGN.md y no se presenta como una recomendación cinematográfica validada.
+Preparado mediante `vercel.json`, lockfile y salida estática `dist`, sin variables de entorno.
 
-Fuentes autoalojadas desde Fontsource: Space Grotesk e IBM Plex Mono, con sus licencias en los paquetes. Documentación primaria consultada: [GSAP y React](https://gsap.com/resources/React/), [deploy estático de Vite](https://vite.dev/guide/static-deploy.html), [configuración de Playwright](https://playwright.dev/docs/test-configuration).
+Cuando se autorice publicar: importar `otiagoo44/sisco-edu-publico`, raíz del repositorio, preset Vite, instalación `npm ci`, build `npm run build`, salida `dist`, Node 24.x. La integración Git de Vercel puede generar despliegues automáticos si se conecta posteriormente. GitHub Actions sólo verifica; no despliega.
+
+No se ejecuta un despliegue de producción sin instrucción expresa.

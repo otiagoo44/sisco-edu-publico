@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { PhotoFrame, type Photo } from "../photos";
-
 export function AcceptanceCelebration({
   photos,
   reduced,
@@ -32,42 +31,39 @@ export function AcceptanceCelebration({
       {!reduced && (
         <canvas ref={canvas} className="confetti-canvas" aria-hidden="true" />
       )}
-      <div className="accepted-photo">
-        <PhotoFrame photo={photos[0]} />
-        <span className="accepted-stamp">
-          PADRINO
-          <br />
-          <strong>2026</strong>
-        </span>
-      </div>
       <div className="accepted-copy">
-        <p className="eyebrow warm">MISIÓN CUMPLIDA. HISTORIA POR ESCRIBIR.</p>
-        <h1 className="accepted-title" tabIndex={-1}>
-          ¡Felicidades!
+        <p className="accepted-intro">¡Tenemos padrino!</p>
+        <h1 tabIndex={-1}>
+          ¡FELICIDADES,
+          <br />
+          <span>PROFE!</span>
         </h1>
         <p className="accepted-message">
-          Sos el padrino de la mejor promo de{" "}
-          <span className="cyan">Bachillerato Técnico en Informática</span>
-        </p>
-        <p className="scene-description">
-          El mejor proyecto siempre fue este equipo.
-          <br />
-          Gracias por ser parte, profe.
-        </p>
-        <p className="signature">
-          Con cariño, su promo 2026 <span aria-hidden="true">♡</span>
+          AHORA SOS EL PADRINO DE LA MEJOR PROMO DE BACHILLERATO TÉCNICO EN
+          INFORMÁTICA.
         </p>
         <div className="accepted-actions">
           <button className="button primary" onClick={onMemories}>
-            Ver nuestros recuerdos <span aria-hidden="true">↗</span>
+            Ver las fotos <span aria-hidden="true">↗</span>
           </button>
           <button className="text-button" onClick={onReplay}>
-            Volver a vivirlo ↺
+            Ver de nuevo
           </button>
         </div>
-        <p className="local-note">
-          Este sí se celebra acá. ¡Cuéntenoslo también en persona!
-        </p>
+      </div>
+      <div className="celebration-collage">
+        {[0, 3, 6, 9, 1, 4].map((index, slot) => (
+          <PhotoFrame
+            key={index}
+            photo={photos[index]}
+            className={"party-photo party-photo-" + slot}
+          />
+        ))}
+        <div className="party-seal" aria-hidden="true">
+          PADRINO
+          <br />
+          <strong>2026</strong>
+        </div>
       </div>
     </div>
   );

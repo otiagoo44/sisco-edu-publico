@@ -9,9 +9,10 @@ export type Photo = {
   width: number;
   height: number;
 };
-export function usePhotos() {
+export function usePhotos(enabled: boolean) {
   const [photos, setPhotos] = useState<Photo[]>([]);
   useEffect(() => {
+    if (!enabled) return;
     const controller = new AbortController();
     fetch("/photos/profe/manifest.json", { signal: controller.signal })
       .then((r) => {
@@ -34,7 +35,7 @@ export function usePhotos() {
         );
         setPhotos(valid);
         // Preload critical imagery without waiting for it to advance the narrative.
-        [valid[0], valid[5], valid[6]].filter(Boolean).forEach((p) => {
+        valid.forEach((p) => {
           const img = new Image();
           img.src = p.src;
           img.decode?.().catch(() => {});
@@ -42,7 +43,7 @@ export function usePhotos() {
       })
       .catch(() => {});
     return () => controller.abort();
-  }, []);
+  }, [enabled]);
   return photos;
 }
 
@@ -59,7 +60,11 @@ export function PhotoFrame({
 }) {
   const [failed, setFailed] = useState(false);
   return (
-    <div className={`photo-frame ${className}`} style={style}>
+    <div
+      className={`photo-frame ${className}`}
+      style={style}
+      data-photo-id={photo?.id}
+    >
       {photo && !failed ? (
         <img
           src={small ? photo.thumbnail : photo.src}
@@ -74,14 +79,10 @@ export function PhotoFrame({
         <div
           className="photo-placeholder"
           role="img"
-          aria-label="Un lugar reservado para nuestros recuerdos"
+          aria-label="Fotografía no disponible"
         >
-          <span aria-hidden="true">{"{ }"}</span>
-          <p>
-            Hay recuerdos que
-            <br />
-            no necesitan una foto.
-          </p>
+          <span aria-hidden="true">▧</span>
+          <p>Foto no disponible</p>
           <small>PROMO 2026</small>
         </div>
       )}

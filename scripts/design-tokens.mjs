@@ -11,9 +11,10 @@ const exported = execFileSync(
   ],
   { encoding: "utf8" },
 );
-// Vite uses native CSS, so adapt the official export's Tailwind container only.
+// Adapt the official export's Tailwind container and font lists to native CSS.
 const css = exported
   .replace("@theme {", ":root {")
+  .replace(/"Arial, system-ui, sans-serif"/g, 'Arial, system-ui, sans-serif')
   .replace(
     /"Space Grotesk, Arial, sans-serif"/g,
     '"Space Grotesk", Arial, sans-serif',

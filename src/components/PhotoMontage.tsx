@@ -1,30 +1,58 @@
 import { PhotoFrame, type Photo } from "../photos";
 import { KineticText } from "./KineticText";
-
+// Nine originals, ordered deliberately: formal, spontaneous, then playful.
+export const montageGroups = [
+  { title: "Candidato encontrado.", indices: [7, 5, 10], className: "formal" },
+  { title: "Hay pruebas.", indices: [2, 3, 4], className: "playful" },
+  { title: "No hay dudas.", indices: [1, 9, 0], className: "confirmed" },
+];
 export function PhotoMontage({ photos }: { photos: Photo[] }) {
   return (
-    <div className="montage-layout">
-      <div className="montage-copy">
-        <p className="eyebrow warm">DETRÁS DE CADA LÍNEA DE CÓDIGO</p>
-        <h1 className="scene-title">
-          <KineticText text="Hay alguien que creyó en nosotros." />
+    <div className="montage-scene">
+      {montageGroups.map((group, i) => (
+        <section
+          className={
+            "sequence-beat photo-composition composition-" + group.className
+          }
+          data-beat
+          data-kind="photo"
+          data-composition={group.className}
+          aria-hidden="true"
+          key={group.className}
+        >
+          <div className="composition-copy">
+            <span className="composition-counter" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h1>
+              <KineticText text={group.title} />
+            </h1>
+          </div>
+          <div className="composition-photos">
+            {group.indices.map((index, slot) => (
+              <PhotoFrame
+                key={index}
+                photo={photos[index]}
+                className={"montage-photo photo-slot-" + slot}
+              />
+            ))}
+          </div>
+        </section>
+      ))}
+      <section
+        className="sequence-beat prequestion-beat"
+        data-beat
+        data-kind="question"
+        aria-hidden="true"
+      >
+        <p>Antes de seguir...</p>
+        <h1>
+          <KineticText text="¿Se acuerda de esto, profe?" />
         </h1>
-        <div className="montage-second">
-          <p>
-            Entre errores, clases y risas,
-            <br />
-            nos llevamos mucho más que informática.
-          </p>
-          <span className="handwritten">Y usted es parte de eso.</span>
-        </div>
-      </div>
-      <div className="montage-photos">
-        <PhotoFrame photo={photos[5]} className="montage-photo montage-back" />
-        <PhotoFrame photo={photos[6]} className="montage-photo montage-side" />
-        <PhotoFrame photo={photos[0]} className="montage-photo montage-front" />
-        <span className="photo-sticker">nuestro mejor commit.</span>
-        <span className="photo-coordinate mono">RECUERDOS / PROMO 2026</span>
-      </div>
+        <span className="prequestion-arrow" aria-hidden="true">
+          ↘
+        </span>
+      </section>
     </div>
   );
 }

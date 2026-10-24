@@ -1,5 +1,33 @@
+import { useState } from "react";
 import { KineticText } from "./KineticText";
-
+const modules = [
+  ["Profesores", "Gestionar profesores", "Docentes y asignaciones académicas."],
+  [
+    "Estudiantes",
+    "Gestionar estudiantes",
+    "Matrícula y organización de estudiantes.",
+  ],
+  [
+    "Horarios",
+    "Gestionar horarios",
+    "Distribución de materias y horas cátedra.",
+  ],
+  [
+    "Asist. Estudiantes",
+    "Ver asistencias de estudiantes",
+    "Consulta de registros de asistencia de estudiantes.",
+  ],
+  [
+    "Asist. Profesores",
+    "Ver asistencias de profesores",
+    "Consulta de registros de asistencia docente.",
+  ],
+  [
+    "Administración",
+    "Gestionar usuarios, aulas, grados, materias y asignaciones.",
+    "Configuración de los módulos del sistema.",
+  ],
+];
 export function BootIntro({
   running,
   onStart,
@@ -7,97 +35,149 @@ export function BootIntro({
   running: boolean;
   onStart: () => void;
 }) {
-  return (
-    <div className="boot-layout">
-      <div className="boot-copy">
-        <p className="eyebrow">
-          <span className="status-dot" /> ENTORNO DE PRESENTACIÓN
-        </p>
-        <h1 className="boot-title">
-          <span>
-            SISCO<span className="cyan">_</span>
-          </span>
-          <span className="outline-type">
-            EDU<span className="title-dot">.</span>
-          </span>
-        </h1>
-        <p className="boot-description">
-          Todo gran proyecto
-          <br /> empieza con una conexión.
-        </p>
-        <div className="project-label">
-          <span className="label-line" /> BACHILLERATO TÉCNICO EN INFORMÁTICA
+  const [active, setActive] = useState("Dashboard");
+  const [menu, setMenu] = useState(false);
+  if (running)
+    return (
+      <div className="verification-scene">
+        <div
+          className="sequence-beat verification-beat"
+          data-beat
+          data-kind="boot"
+          aria-hidden="true"
+        >
+          <span className="system-wordmark">SISCO-EDU</span>
+          <div className="verification-mark" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <h1>
+            <KineticText text="Verificando sistema..." />
+          </h1>
+          <p>Comprobando módulos y configuración.</p>
         </div>
       </div>
-      <div className="terminal-wrap">
-        <div className="terminal-orbit" aria-hidden="true">
-          <span>26</span>
+    );
+  const selected = modules.find((item) => item[0] === active);
+  return (
+    <div className="sisco-shell">
+      <button
+        className="sisco-menu"
+        aria-expanded={menu}
+        aria-controls="sisco-navigation"
+        onClick={() => setMenu(!menu)}
+      >
+        {menu ? "Cerrar menú" : "Menú"} <span aria-hidden="true">☰</span>
+      </button>
+      <aside
+        className={"sisco-sidebar " + (menu ? "menu-open" : "")}
+        id="sisco-navigation"
+      >
+        <a
+          className="sisco-logo"
+          href="#experience"
+          onClick={() => setActive("Dashboard")}
+        >
+          SISCO-EDU
+        </a>
+        <nav aria-label="Módulos del sistema">
+          {["Dashboard", ...modules.map((m) => m[0])].map((name) => (
+            <button
+              key={name}
+              className={
+                "sisco-nav-link " + (active === name ? "is-active" : "")
+              }
+              aria-current={active === name ? "page" : undefined}
+              onClick={() => {
+                setActive(name);
+                setMenu(false);
+              }}
+            >
+              {name}
+            </button>
+          ))}
+        </nav>
+        <div className="sisco-sidebar-footer">
+          Sistema de control
+          <br />
+          de asistencia
         </div>
-        <div className="terminal">
-          <div className="terminal-top">
-            <span>
-              <span className="terminal-symbol">&gt;_</span> sisco-edu / console
-            </span>
-            <span className="terminal-live">LOCAL</span>
+      </aside>
+      <div className="sisco-main">
+        <div className="sisco-topbar">
+          <span>Gestión académica</span>
+          <span className="sisco-access">Acceso local</span>
+        </div>
+        <div className="sisco-page-header">
+          <div>
+            <p className="sisco-breadcrumb">SISCO-EDU / {active}</p>
+            <h1>
+              {active === "Dashboard" ? "Bienvenido a SISCO-EDU" : active}
+            </h1>
+            <p>
+              {active === "Dashboard"
+                ? "Sistema Integral de Gestión Pedagógica e IoT"
+                : selected?.[2]}
+            </p>
           </div>
-          <div className="terminal-body">
-            <p className="terminal-comment">
-              // Un proyecto de la promoción 2026
-            </p>
-            <p className="terminal-command">
-              <span>~</span> ./iniciar-presentacion
-            </p>
-            <div className="terminal-log">
-              <p className="terminal-line">
-                <span className="check">✓</span> Interfaz inicializada
-              </p>
-              <p className="terminal-line">
-                <span className="check">✓</span> Módulo de recuerdos disponible
-              </p>
-              <p className="terminal-line">
-                <span className="check">✓</span> Conexión más importante:{" "}
-                <span className="cyan">usted</span>
-              </p>
-            </div>
-            <div className="terminal-prompt">
-              <span aria-hidden="true">›</span>{" "}
-              {running ? (
-                <KineticText text="Ejecutando algo especial..." />
-              ) : (
-                <>
-                  Esperando al profe
-                  <span className="cursor" aria-hidden="true">
-                    _
-                  </span>
-                </>
-              )}
-            </div>
-            {running ? (
-              <div className="scene-progress">
-                <span className="progress-fill" />
-              </div>
-            ) : (
-              <button className="button primary start-button" onClick={onStart}>
-                Iniciar sistema <span aria-hidden="true">↗</span>
+          <button className="sisco-start" onClick={onStart}>
+            Iniciar sistema <span aria-hidden="true">→</span>
+          </button>
+        </div>
+        <div className="sisco-section-heading">
+          <h2>
+            {active === "Dashboard"
+              ? "Módulos del sistema"
+              : "Información del módulo"}
+          </h2>
+          <p>
+            {active === "Dashboard"
+              ? "Seleccioná un módulo para continuar."
+              : "Vista local de la interfaz."}
+          </p>
+        </div>
+        {active === "Dashboard" ? (
+          <div className="sisco-modules">
+            {modules.map(([title, description], i) => (
+              <button
+                className={
+                  "sisco-module " + (i === 5 ? "sisco-module-accent" : "")
+                }
+                key={title}
+                onClick={() => setActive(title)}
+              >
+                <div className="module-symbol" aria-hidden="true">
+                  {["◷", "▤", "▦", "✓", "✓", "⚙"][i]}
+                </div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <span className="module-arrow" aria-hidden="true">
+                  ↗
+                </span>
               </button>
-            )}
-            <p className="terminal-footnote">
-              {running
-                ? "Secuencia de presentación · podés saltarla"
-                : "Una presentación breve. Un proyecto muy nuestro."}
+            ))}
+          </div>
+        ) : (
+          <section className="sisco-module-detail">
+            <h3>{selected?.[1]}</h3>
+            <p>{selected?.[2]}</p>
+            <p>
+              La consulta de registros requiere una conexión al servidor
+              académico.
             </p>
-          </div>
-          <div className="terminal-bottom">
-            <span>BTI / PROMO_2026</span>
-            <span className="cyan">
-              {running ? "EJECUTANDO" : "LISTO PARA INICIAR"}
-            </span>
-          </div>
-        </div>
-        <p className="terminal-caption">
-          <span>01 / PRESENTACIÓN</span>
-          <span>HECHO POR SUS ALUMNOS</span>
-        </p>
+            <button
+              className="sisco-back"
+              onClick={() => setActive("Dashboard")}
+            >
+              ← Volver al Dashboard
+            </button>
+          </section>
+        )}
+        <footer className="sisco-footer">
+          <span>SISCO-EDU</span>
+          <span>Gestión pedagógica · Control de asistencia</span>
+        </footer>
       </div>
     </div>
   );

@@ -1,36 +1,36 @@
 {
   "tool": "Lighthouse 13.5.0",
-  "fetchTime": "2026-10-24T01:12:04.288Z",
+  "fetchTime": "2026-10-24T02:12:39.652Z",
   "url": "http://127.0.0.1:4174/",
   "scope": "Build de producción local, navegación inicial SISCO-EDU, emulación móvil de laboratorio. No es una medición de campo ni de Vercel.",
   "categories": {
-    "performance": 91,
+    "performance": 77,
     "accessibility": 100,
     "best-practices": 100
   },
   "metrics": {
     "first-contentful-paint": {
-      "value": 1990.8586,
+      "value": 1744.5627,
       "unit": "millisecond",
-      "display": "2.0 s"
+      "display": "1.7 s"
     },
     "largest-contentful-paint": {
-      "value": 2789.7879000000003,
+      "value": 1744.5627,
       "unit": "millisecond",
-      "display": "2.8 s"
+      "display": "1.7 s"
     },
     "cumulative-layout-shift": {
-      "value": 0.009891009389060575,
+      "value": 0,
       "unit": "unitless",
-      "display": "0.01"
+      "display": "0"
     },
     "total-blocking-time": {
-      "value": 183.00000000000023,
+      "value": 1010.6406750000001,
       "unit": "millisecond",
-      "display": "180 ms"
+      "display": "1,010 ms"
     },
     "speed-index": {
-      "value": 2489.723439215818,
+      "value": 2538.3121113405014,
       "unit": "millisecond",
       "display": "2.5 s"
     }

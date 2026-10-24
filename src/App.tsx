@@ -11,61 +11,46 @@ import { AcceptanceCelebration } from "./components/AcceptanceCelebration";
 import { AudioControl } from "./components/AudioControl";
 import { SkipControl } from "./components/SkipControl";
 import { MemoriesDialog } from "./components/MemoriesDialog";
-
-const chapters = ["Conexión", "Diagnóstico", "Recuerdos", "La pregunta"];
-const chapterFor: Record<Stage, number> = {
-  boot: 0,
-  diagnostic: 1,
-  glitch: 1,
-  montage: 2,
-  invitation: 3,
-  accepted: 3,
-  declined: 3,
-};
+import { MemoryJourney } from "./components/memories/MemoryJourney";
+import { StudentsChapter } from "./components/StudentsChapter";
 const announcements: Record<Stage, string> = {
-  boot: "Presentación SISCO-EDU lista para iniciar.",
-  diagnostic: "Diagnóstico narrativo en curso.",
-  glitch: "Tenemos algo especial que decirle.",
-  montage: "Recuerdos de la promoción.",
-  invitation: "Profe, ¿quiere ser nuestro padrino?",
-  accepted: "¡Felicidades! Sos nuestro padrino.",
-  declined: "Gracias por ser parte de nuestra historia, profe.",
+  boot: "SISCO-EDU. Sistema de gestión académica.",
+  diagnostic: "Se encontró un pendiente. Analizando candidatos.",
+  glitch: "Cambio de escena.",
+  montage: "Candidato encontrado.",
+  memories: "Los proyectos y el viaje con el profe Danilo.",
+  students: "¿Qué piensa la promo del profe Danilo?",
+  invitation: "Profe Danilo, ¿quiere ser nuestro padrino?",
+  accepted: "¡Felicidades, profe! Ahora sos nuestro padrino.",
 };
-
 export default function App() {
   const reduced = useReducedMotion();
-  const [stage, dispatch] = useReducer(
-    stageReducer,
-    reduced ? "invitation" : "boot",
-  );
+  const [stage, dispatch] = useReducer(stageReducer, "boot");
   const [running, setRunning] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [thinking, setThinking] = useState(false);
   const [memories, setMemories] = useState(false);
-  const photos = usePhotos();
+  const photos = usePhotos(running);
   const advance = useCallback(() => dispatch({ type: "ADVANCE" }), []);
   const root = useScene(stage, running, paused, reduced, advance);
-  const cinematic = cinematicStages.includes(stage);
-  const revealed = ["montage", "invitation", "accepted", "declined"].includes(
-    stage,
-  );
+  const cinematic = running && cinematicStages.includes(stage);
+  const idle = stage === "boot" && !running;
   const skip = useCallback(() => dispatch({ type: "SKIP" }), []);
   const replay = () => {
     setRunning(false);
     setPaused(false);
     dispatch({ type: "REPLAY" });
-    if (reduced) dispatch({ type: "SKIP" });
   };
-
   useEffect(() => {
-    if (reduced) dispatch({ type: "SKIP" });
-  }, [reduced]);
-  useEffect(() => {
-    const escape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && cinematic) skip();
+    const escape = (event: KeyboardEvent) => {
+      if (
+        event.key === "Escape" &&
+        cinematic &&
+        !document.querySelector("dialog[open]")
+      )
+        skip();
     };
     const visibility = () => {
-      if (document.hidden) setPaused(true);
+      if (document.hidden && running) setPaused(true);
     };
     document.addEventListener("keydown", escape);
     document.addEventListener("visibilitychange", visibility);
@@ -73,55 +58,56 @@ export default function App() {
       document.removeEventListener("keydown", escape);
       document.removeEventListener("visibilitychange", visibility);
     };
-  }, [cinematic, skip]);
+  }, [cinematic, running, skip]);
   useEffect(() => {
-    document.title = revealed
-      ? "OPERACIÓN PADRINO · Promo 2026"
-      : "SISCO-EDU · Presentación del proyecto";
-    if (["invitation", "accepted", "declined"].includes(stage))
+    document.title = ["invitation", "accepted"].includes(stage)
+      ? "Promo 2026 · OPERACIÓN PADRINO"
+      : "SISCO-EDU | Gestión académica";
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute(
+        "content",
+        idle ? "#f8fafc" : stage === "accepted" ? "#f5f2ea" : "#182de0",
+      );
+    if (["invitation", "accepted"].includes(stage)) {
+      window.scrollTo({ top: 0, behavior: "instant" });
       root.current
         ?.querySelector<HTMLElement>("h1")
         ?.focus({ preventScroll: true });
-  }, [stage, revealed, root]);
-
+    }
+  }, [stage, idle, root]);
   return (
     <div
-      className={`app stage-${stage} ${paused && cinematic ? "is-paused" : ""}`}
+      className={
+        "app stage-" +
+        stage +
+        (idle ? " is-idle" : " has-started") +
+        (paused && cinematic ? " is-paused" : "")
+      }
     >
       <a className="skip-link" href="#experience">
         Ir al contenido
       </a>
-      <div className="ambient" aria-hidden="true">
-        <div className="blue-light" />
-        <div className="grid-floor" />
-        <span className="ambient-plus plus-a">+</span>
-        <span className="ambient-plus plus-b">+</span>
-        <span className="ambient-plus plus-c">+</span>
-      </div>
-      <header className="masthead">
-        <a className="brand" href="#experience">
-          <span className="brand-mark" aria-hidden="true">
-            {"</>"}
-          </span>
-          <span>
-            {revealed ? "OPERACIÓN PADRINO" : "SISCO-EDU"}
-            <small>
-              {revealed ? "UNA MISIÓN DE LA PROMO" : "PROYECTO · PRESENTACIÓN"}
-            </small>
-          </span>
-        </a>
-        <div className="masthead-right">
-          <span className="edition">
-            BTI <span>/</span> PROMO 2026
-          </span>
+      {!idle && (
+        <header className="film-header">
+          <a href="#experience" className="film-brand">
+            {["invitation", "accepted"].includes(stage) ? (
+              <>
+                Promo <strong>2026</strong>
+              </>
+            ) : (
+              "SISCO-EDU"
+            )}
+          </a>
           <AudioControl />
-        </div>
-      </header>
+        </header>
+      )}
       <main
         ref={root}
         id="experience"
         className="experience"
         data-state={stage}
+        data-running={running}
       >
         {stage === "boot" && (
           <BootIntro running={running} onStart={() => setRunning(true)} />
@@ -129,16 +115,25 @@ export default function App() {
         {stage === "diagnostic" && <Diagnostic />}
         {stage === "glitch" && <GlitchTransition />}
         {stage === "montage" && <PhotoMontage photos={photos} />}
+        {stage === "memories" && (
+          <MemoryJourney
+            paused={paused}
+            reduced={reduced}
+            onComplete={advance}
+          />
+        )}
+        {stage === "students" && (
+          <StudentsChapter
+            reduced={reduced}
+            paused={paused}
+            onContinue={advance}
+          />
+        )}
         {stage === "invitation" && (
           <Invitation
             photos={photos}
             reduced={reduced}
             onAccept={() => dispatch({ type: "ACCEPT" })}
-            onDecline={(value) => {
-              setThinking(value);
-              dispatch({ type: "DECLINE" });
-            }}
-            onMemories={() => setMemories(true)}
           />
         )}
         {stage === "accepted" && (
@@ -149,74 +144,29 @@ export default function App() {
             onMemories={() => setMemories(true)}
           />
         )}
-        {stage === "declined" && (
-          <div className="declined-layout">
-            <p className="eyebrow warm">CADA HISTORIA TIENE SU TIEMPO</p>
-            <span className="declined-symbol" aria-hidden="true">
-              {"{ ♡ }"}
-            </span>
-            <h1 className="scene-title" tabIndex={-1}>
-              {thinking
-                ? "Los mejores commits\nse piensan con calma."
-                : "El cariño no depende\nde una respuesta."}
-            </h1>
-            <p className="scene-description">
-              {thinking
-                ? "Tómese su tiempo, profe. Esta invitación sigue abierta."
-                : "Gracias por todo lo que nos enseñó, profe.\nYa es parte de nuestra historia."}
-            </p>
-            <div className="declined-actions">
-              <button
-                className="button primary"
-                onClick={() => dispatch({ type: "RECONSIDER" })}
-              >
-                Volver a la invitación <span aria-hidden="true">↗</span>
-              </button>
-              <button className="text-button" onClick={() => setMemories(true)}>
-                Ver nuestros recuerdos
-              </button>
-            </div>
-            <p className="local-note">
-              Su respuesta queda sólo en esta pantalla.
-            </p>
-          </div>
-        )}
       </main>
-      <footer className="experience-footer">
-        <ol className="chapters" aria-label="Capítulos de la presentación">
-          {chapters.map((name, i) => (
-            <li
-              key={name}
-              className={`${i === chapterFor[stage] ? "current" : ""} ${i < chapterFor[stage] ? "complete" : ""}`}
-              aria-current={i === chapterFor[stage] ? "step" : undefined}
-            >
-              <span className="chapter-number">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span>{name}</span>
-              <span className="chapter-line" />
-            </li>
-          ))}
-        </ol>
-        <div className="footer-controls">
-          {cinematic ? (
-            <SkipControl
-              onSkip={skip}
-              running={running}
-              paused={paused}
-              onPause={() => setPaused(!paused)}
-            />
-          ) : (
-            <span className="footer-signature">
-              HECHO CON CÓDIGO. Y CON CARIÑO.
-              <span className="cyan" aria-hidden="true">
-                {" "}
-                ✳
-              </span>
-            </span>
+      {!idle && (
+        <footer className="film-footer">
+          <span>
+            {["invitation", "accepted", "students", "memories"].includes(stage)
+              ? "Bachillerato Técnico en Informática"
+              : "SISCO-EDU"}
+          </span>
+          {cinematic && (
+            <div className="film-playback">
+              <button className="utility-button" onClick={replay}>
+                Repetir
+              </button>
+              <SkipControl
+                onSkip={skip}
+                running={running}
+                paused={paused}
+                onPause={() => setPaused(!paused)}
+              />
+            </div>
           )}
-        </div>
-      </footer>
+        </footer>
+      )}
       <div
         className="sr-only"
         role="status"

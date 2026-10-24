@@ -30,12 +30,7 @@ export function MemoriesDialog({
     >
       <div className="memories-header">
         <div>
-          <p className="eyebrow cyan">NUESTRO ARCHIVO FAVORITO</p>
-          <h2 id="memories-title">
-            Pequeños momentos.
-            <br />
-            Grandes recuerdos.
-          </h2>
+          <h2 id="memories-title">Las fotos del profe</h2>
         </div>
         <button className="button secondary" onClick={onClose} autoFocus>
           Cerrar <span aria-hidden="true">×</span>
@@ -47,7 +42,7 @@ export function MemoriesDialog({
             <figure key={p.id}>
               <PhotoFrame photo={p} small />
               <figcaption className="mono">
-                RECUERDO_{String(i + 1).padStart(2, "0")} / PROMO 2026
+                {String(i + 1).padStart(2, "0")} / PROMO 2026
               </figcaption>
             </figure>
           ))
@@ -55,9 +50,6 @@ export function MemoriesDialog({
           <PhotoFrame />
         )}
       </div>
-      <p className="scene-description">
-        Lo mejor de estos recuerdos es haberlos compartido.
-      </p>
     </dialog>
   );
 }

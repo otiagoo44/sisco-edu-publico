@@ -1,92 +1,158 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
 import { PhotoFrame, type Photo } from "../photos";
-
 export function Invitation({
   photos,
   reduced,
   onAccept,
-  onDecline,
-  onMemories,
 }: {
   photos: Photo[];
   reduced: boolean;
   onAccept: () => void;
-  onDecline: (thinking: boolean) => void;
-  onMemories: () => void;
 }) {
-  const [escaped, setEscaped] = useState(false);
+  const arena = useRef<HTMLDivElement>(null);
+  const no = useRef<HTMLButtonElement>(null);
+  const yes = useRef<HTMLButtonElement>(null);
+  const count = useRef(0);
+  const reducedRef = useRef(reduced);
+  reducedRef.current = reduced;
+  function move(pointer?: { x: number; y: number }) {
+    if (!arena.current || !no.current || !yes.current) return;
+    const bounds = arena.current.getBoundingClientRect();
+    const yesBounds = yes.current.getBoundingClientRect();
+    const noBounds = no.current.getBoundingClientRect();
+    const minimumX = yesBounds.right - bounds.left + 24;
+    const maximumX = Math.max(minimumX, bounds.width - noBounds.width - 4);
+    const maximumY = Math.max(8, bounds.height - noBounds.height - 8);
+    const slots = [
+      [0, 0],
+      [1, 1],
+      [0.1, 0.9],
+      [1, 0.05],
+      [0.55, 0.55],
+    ];
+    const current = {
+      x: noBounds.x + noBounds.width / 2,
+      y: noBounds.y + noBounds.height / 2,
+    };
+    const origin = pointer ?? current;
+    const choices = slots.map(([x, y], index) => ({
+      x: minimumX + x * (maximumX - minimumX),
+      y: 8 + y * (maximumY - 8),
+      index,
+    }));
+    const ordered = choices
+      .map((c) => ({
+        ...c,
+        distance: Math.hypot(
+          bounds.left + c.x + noBounds.width / 2 - origin.x,
+          bounds.top + c.y + noBounds.height / 2 - origin.y,
+        ),
+      }))
+      .sort((a, b) => b.distance - a.distance);
+    const target = ordered[count.current % Math.min(2, ordered.length)];
+    count.current++;
+    no.current.dataset.escapes = String(count.current);
+    gsap.to(no.current, {
+      x: target.x,
+      y: target.y,
+      rotation: count.current % 2 ? -4 : 4,
+      duration: reducedRef.current ? 0 : 0.16,
+      ease: "power2.out",
+      overwrite: true,
+    });
+  }
+  useLayoutEffect(() => {
+    const button = no.current!;
+    const layout = () => {
+      if (!arena.current || !yes.current) return;
+      gsap.set(button, {
+        x: Math.min(
+          arena.current.clientWidth - button.offsetWidth - 4,
+          yes.current.offsetWidth + 40,
+        ),
+        y: 8,
+        rotation: 0,
+      });
+    };
+    layout();
+    const resize = new ResizeObserver(layout);
+    resize.observe(arena.current!);
+    return () => {
+      resize.disconnect();
+      gsap.killTweensOf(button);
+    };
+  }, []);
   return (
     <div className="invitation-layout">
       <div className="invitation-copy">
-        <p className="eyebrow">
-          <span className="warm-line" /> MISIÓN: SEGUIR JUNTOS
-        </p>
-        <h1 className="invitation-title" tabIndex={-1}>
-          Profe,
-          <br />
-          ¿quiere ser
-          <br /> nuestro{" "}
-          <span className="padrino-word">
-            padrino<span className="cyan">?</span>
-            <svg viewBox="0 0 330 14" aria-hidden="true">
-              <path d="M3 10Q120 0 327 5" />
-            </svg>
+        <p className="invitation-address">PROFE DANILO,</p>
+        <h1
+          className="invitation-title"
+          tabIndex={-1}
+          aria-label="PROFE DANILO, ¿QUIERE SER NUESTRO PADRINO?"
+        >
+          <span>¿QUIERE SER</span>
+          <span>NUESTRO</span>
+          <span className="question-last">
+            PADRINO<span>?</span>
           </span>
         </h1>
-        <p className="invitation-description">
-          Nos enseñó a resolver problemas.
-          <br />
-          Ahora tenemos uno: no imaginamos
-          <br className="desktop-break" /> este último capítulo sin usted.
-        </p>
-        <div className="response-actions">
-          <button className="button primary accept-button" onClick={onAccept}>
-            Sí, ¡acepto la misión! <span aria-hidden="true">↗</span>
+        <p className="invitation-promo">Promoción 2026</p>
+        <div
+          className="response-arena"
+          ref={arena}
+          onPointerMove={(e) => {
+            if (e.pointerType !== "mouse" || !no.current) return;
+            const r = no.current.getBoundingClientRect();
+            if (
+              e.clientX >= r.left - 24 &&
+              e.clientX <= r.right + 24 &&
+              e.clientY >= r.top - 22 &&
+              e.clientY <= r.bottom + 22
+            )
+              move({ x: e.clientX, y: e.clientY });
+          }}
+        >
+          <button ref={yes} className="yes-button" onClick={onAccept}>
+            SÍ <span aria-hidden="true">↗</span>
           </button>
           <button
-            className={`button secondary no-button ${escaped ? "escaped" : ""}`}
+            ref={no}
+            className="no-button"
+            data-escapes="0"
             onPointerEnter={(e) => {
-              if (e.pointerType === "mouse" && !escaped && !reduced)
-                setEscaped(true);
+              if (e.pointerType === "mouse")
+                move({ x: e.clientX, y: e.clientY });
             }}
-            onClick={() => onDecline(false)}
+            onPointerDown={(e) => {
+              e.preventDefault();
+              move({ x: e.clientX, y: e.clientY });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                move();
+              }
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              move();
+            }}
           >
-            No, gracias
+            NO
           </button>
         </div>
-        <div className="decision-note" aria-live="polite">
-          {escaped
-            ? "Un pequeño bug de nervios. Ahora sí, puede decir que no."
-            : "Una invitación de toda la promo. Con mucho cariño."}
-        </div>
-        <button
-          className="text-button think-button"
-          onClick={() => onDecline(true)}
-        >
-          Quiero pensarlo un poquito <span aria-hidden="true">→</span>
-        </button>
       </div>
-      <div className="invitation-visual">
-        <div className="orbit-ring" aria-hidden="true" />
-        <span className="visual-year" aria-hidden="true">
-          2026
+      <div className="invitation-portrait">
+        <span className="portrait-year" aria-hidden="true">
+          26
         </span>
-        <PhotoFrame photo={photos[6]} className="invite-photo invite-back" />
-        <PhotoFrame photo={photos[0]} className="invite-photo invite-main" />
-        <div className="photo-note">
-          <span className="note-star" aria-hidden="true">
-            ✳
-          </span>
-          <span>
-            Hay profes que dejan huella.
-            <br />
-            <strong>Usted dejó historia.</strong>
-          </span>
-        </div>
-        <button className="memories-button" onClick={onMemories}>
-          <span aria-hidden="true">▧</span> Nuestros recuerdos{" "}
-          <span aria-hidden="true">↗</span>
-        </button>
+        <PhotoFrame photo={photos[6]} className="question-photo" />
+        <span className="portrait-caption">El profe. Nuestro candidato.</span>
+        <span className="portrait-corner" aria-hidden="true">
+          ↖
+        </span>
       </div>
     </div>
   );

@@ -8,13 +8,14 @@
   },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && node --experimental-strip-types scripts/check-content.mjs && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "photos": "node scripts/prepare-photos.mjs",
     "design:lint": "node .agents/skills/google-design-md/scripts/google-cli/index.mjs lint DESIGN.md",
-    "design:tokens": "node scripts/design-tokens.mjs"
+    "design:tokens": "node scripts/design-tokens.mjs",
+    "content:check": "node --experimental-strip-types scripts/check-content.mjs"
   },
   "dependencies": {
     "gsap": "^3.14.2",

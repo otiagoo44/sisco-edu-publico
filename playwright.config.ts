@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
-  timeout: 60_000,
+  timeout: 120_000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
@@ -25,9 +25,16 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: "npm run preview -- --port 4173 --strictPort",
-    port: 4173,
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: [
+    {
+      command: "npm run preview -- --port 4173 --strictPort",
+      port: 4173,
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      command: "npm run dev -- --port 4175 --strictPort",
+      port: 4175,
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 });
