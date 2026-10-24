@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "source": "Fotos aportadas por la promoción. Sin retoque facial; sólo orientación, escala y compresión.",
+  "photos": [
+    {
+      "id": "1000160923",
+      "src": "/photos/profe/1000160923.webp",
+      "thumbnail": "/photos/profe/1000160923-small.webp",
+      "alt": "El profe sonriendo con un cartel que dice SMILE",
+      "width": 556,
+      "height": 639
+    },
+    {
+      "id": "1000160924",
+      "src": "/photos/profe/1000160924.webp",
+      "thumbnail": "/photos/profe/1000160924-small.webp",
+      "alt": "Un recuerdo del profe durante un viaje",
+      "width": 1034,
+      "height": 1034
+    },
+    {
+      "id": "1000160927",
+      "src": "/photos/profe/1000160927.webp",
+      "thumbnail": "/photos/profe/1000160927-small.webp",
+      "alt": "El profe al aire libre detrás de una silla",
+      "width": 844,
+      "height": 1500
+    },
+    {
+      "id": "1000160931",
+      "src": "/photos/profe/1000160931.webp",
+      "thumbnail": "/photos/profe/1000160931-small.webp",
+      "alt": "Foto del profe con un filtro de orejas y corazones aportada por la promo",
+      "width": 844,
+      "height": 1500
+    },
+    {
+      "id": "1000160932",
+      "src": "/photos/profe/1000160932.webp",
+      "thumbnail": "/photos/profe/1000160932-small.webp",
+      "alt": "Un recuerdo espontáneo del profe durante un viaje",
+      "width": 1066,
+      "height": 1066
+    },
+    {
+      "id": "1000160938",
+      "src": "/photos/profe/1000160938.webp",
+      "thumbnail": "/photos/profe/1000160938-small.webp",
+      "alt": "El profe de perfil con su camisa celeste",
+      "width": 960,
+      "height": 1280
+    },
+    {
+      "id": "1000160940",
+      "src": "/photos/profe/1000160940.webp",
+      "thumbnail": "/photos/profe/1000160940-small.webp",
+      "alt": "El profe sonriendo con su camisa celeste",
+      "width": 960,
+      "height": 1280
+    },
+    {
+      "id": "1000160942",
+      "src": "/photos/profe/1000160942.webp",
+      "thumbnail": "/photos/profe/1000160942-small.webp",
+      "alt": "Retrato del profe con los brazos cruzados",
+      "width": 960,
+      "height": 1280
+    },
+    {
+      "id": "1000160944",
+      "src": "/photos/profe/1000160944.webp",
+      "thumbnail": "/photos/profe/1000160944-small.webp",
+      "alt": "Un segundo retrato del profe de perfil",
+      "width": 960,
+      "height": 1280
+    },
+    {
+      "id": "1000160946",
+      "src": "/photos/profe/1000160946.webp",
+      "thumbnail": "/photos/profe/1000160946-small.webp",
+      "alt": "Collage del rostro del profe sobre un personaje de traje aportado por la promo",
+      "width": 853,
+      "height": 1280
+    },
+    {
+      "id": "1000160948",
+      "src": "/photos/profe/1000160948.webp",
+      "thumbnail": "/photos/profe/1000160948-small.webp",
+      "alt": "El profe frente a la cámara con su camisa celeste",
+      "width": 960,
+      "height": 1280
+    }
+  ]
+}
