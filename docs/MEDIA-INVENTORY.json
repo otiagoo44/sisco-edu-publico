@@ -1,0 +1,521 @@
+[
+  {
+    "file": "material-final/alumnos/arturo.jpg",
+    "bytes": 98915,
+    "sha256": "bd5af90d9c460a04f073a32dafeb0929daeeb234c909ea9a1ff95d5c1df6010c",
+    "type": "photo",
+    "width": 1200,
+    "height": 1600,
+    "orientation": 1,
+    "observation": "Retrato individual vertical, traje y corbata; rostro completo, iluminación interior.",
+    "destination": "Borrador Arturo: foto lista; falta mensaje.",
+    "derivative": {
+      "source": "alumnos/arturo.jpg",
+      "dest": "public/media/alumnos/arturo.webp",
+      "bytes": 56346
+    }
+  },
+  {
+    "file": "material-final/alumnos/fio.jpg",
+    "bytes": 127285,
+    "sha256": "a07d6c59c846d61efbbef2da2629d0f3b14ed5b3400afc66245892887424d18f",
+    "type": "photo",
+    "width": 1200,
+    "height": 1600,
+    "orientation": 1,
+    "observation": "Retrato individual vertical, traje y corbata, cabello largo; rostro completo.",
+    "destination": "Testimonio Fio, orden 2. Coincidencia de nombre exacta.",
+    "derivative": {
+      "source": "alumnos/fio.jpg",
+      "dest": "public/media/alumnos/fio.webp",
+      "bytes": 76420
+    }
+  },
+  {
+    "file": "material-final/alumnos/florencia.jpg",
+    "bytes": 67730,
+    "sha256": "f431ffb79a516ddcd16ca9cfc1a5cfc5aefb8aad846d19586e422036b6627f02",
+    "type": "photo",
+    "width": 960,
+    "height": 1280,
+    "orientation": 1,
+    "observation": "Retrato individual vertical, traje y corbata; rostro completo.",
+    "destination": "Testimonio Flor, orden 3. Alias único Flor → florencia; no existe otra foto candidata.",
+    "derivative": {
+      "source": "alumnos/florencia.jpg",
+      "dest": "public/media/alumnos/florencia.webp",
+      "bytes": 59234
+    }
+  },
+  {
+    "file": "material-final/alumnos/mati.jpg",
+    "bytes": 83835,
+    "sha256": "8615458fc602f5eae4dc93dbe7e6adfee25a9a09bce17892f28b726082f538c1",
+    "type": "photo",
+    "width": 1200,
+    "height": 1600,
+    "orientation": 1,
+    "observation": "Retrato individual vertical, traje y corbata; rostro completo.",
+    "destination": "Testimonio Mati, orden 5. Coincidencia exacta.",
+    "derivative": {
+      "source": "alumnos/mati.jpg",
+      "dest": "public/media/alumnos/mati.webp",
+      "bytes": 44674
+    }
+  },
+  {
+    "file": "material-final/alumnos/nahuel.jpg",
+    "bytes": 117254,
+    "sha256": "9b9c2b2b084bedc37ddc9d391b964ba162d65739d9315fff06087d8ca86f7a8f",
+    "type": "photo",
+    "width": 1200,
+    "height": 1600,
+    "orientation": 1,
+    "observation": "Retrato individual vertical frente a pizarra, con anteojos y traje.",
+    "destination": "Borrador Nahuel: foto lista; falta mensaje.",
+    "derivative": {
+      "source": "alumnos/nahuel.jpg",
+      "dest": "public/media/alumnos/nahuel.webp",
+      "bytes": 64730
+    }
+  },
+  {
+    "file": "material-final/alumnos/ortega.jpg",
+    "bytes": 117372,
+    "sha256": "ca455214a861506ede5e9789c563eb6939aa6da7eabf8e6ac470b7638883d0c5",
+    "type": "photo",
+    "width": 1200,
+    "height": 1600,
+    "orientation": 1,
+    "observation": "Retrato individual vertical frente a pizarra, con anteojos y traje. Persona distinta a Nahuel, nombres inequívocos.",
+    "destination": "Testimonio Ortega, orden 1. Coincidencia exacta.",
+    "derivative": {
+      "source": "alumnos/ortega.jpg",
+      "dest": "public/media/alumnos/ortega.webp",
+      "bytes": 63308
+    }
+  },
+  {
+    "file": "material-final/alumnos/thiago.jpg",
+    "bytes": 93265,
+    "sha256": "1a7ecab9fcc13a9f2e4e5a6b58b0df9f872e471e69cdf794bcf4fea75a2d907b",
+    "type": "photo",
+    "width": 1200,
+    "height": 1600,
+    "orientation": 1,
+    "observation": "Retrato individual vertical con traje, cabello claro.",
+    "destination": "Testimonio Thiago, orden 6. Coincidencia exacta.",
+    "derivative": {
+      "source": "alumnos/thiago.jpg",
+      "dest": "public/media/alumnos/thiago.webp",
+      "bytes": 51128
+    }
+  },
+  {
+    "file": "material-final/alumnos/zarate.jpg",
+    "bytes": 95025,
+    "sha256": "869f696578d22aed175fd8365a2fc64f467cbc909cb3c24329fae774672588ad",
+    "type": "photo",
+    "width": 1200,
+    "height": 1600,
+    "orientation": 1,
+    "observation": "Retrato individual vertical con traje, cabello oscuro peinado hacia atrás.",
+    "destination": "Testimonio Zarate, orden 4. Coincidencia exacta.",
+    "derivative": {
+      "source": "alumnos/zarate.jpg",
+      "dest": "public/media/alumnos/zarate.webp",
+      "bytes": 52648
+    }
+  },
+  {
+    "file": "material-final/arca/1000164107.jpg",
+    "bytes": 34719,
+    "sha256": "122ac1d80978ee99e15545981ecae14c886cca376a573465b9b39f0672702dda",
+    "type": "photo",
+    "width": 719,
+    "height": 1014,
+    "orientation": 1,
+    "observation": "Persona de espaldas ante el mar con remera Arca: NO es una fotografía del proyecto. Vertical, cielo gris, detalle moderado.",
+    "destination": "Brasil, foto 1. Reclasificada por contenido visual.",
+    "derivative": {
+      "source": "arca/1000164107.jpg",
+      "dest": "public/media/recuerdos/brasil/frente-al-mar.webp",
+      "bytes": 26904
+    }
+  },
+  {
+    "file": "material-final/arca/1000164108.jpg",
+    "bytes": 63083,
+    "sha256": "11126fb556b5bf9baf3fe3ede9a76e040d017a02c952f3a8d4e029c3fe0eea8d",
+    "type": "photo",
+    "width": 719,
+    "height": 621,
+    "orientation": 1,
+    "observation": "Interior de maqueta de arca, madera y cableado; foto casi horizontal. Ya comprimida, sin ampliación.",
+    "destination": "Arca de robótica, foto 1.",
+    "derivative": {
+      "source": "arca/1000164108.jpg",
+      "dest": "public/media/recuerdos/arca/interior.webp",
+      "bytes": 63722
+    }
+  },
+  {
+    "file": "material-final/arca/1000164109.jpg",
+    "bytes": 80590,
+    "sha256": "0a85c82329702fc1c982b033ecef892e6e655f05b437eef64d58244f552bb4d9",
+    "type": "photo",
+    "width": 719,
+    "height": 822,
+    "orientation": 1,
+    "observation": "Arca completa de madera en una mesa del aula; casi vertical. Buena lectura de la forma del proyecto.",
+    "destination": "Arca de robótica, foto 2.",
+    "derivative": {
+      "source": "arca/1000164109.jpg",
+      "dest": "public/media/recuerdos/arca/completa.webp",
+      "bytes": 86044
+    }
+  },
+  {
+    "file": "material-final/brasil/1000164097.mp4",
+    "bytes": 1508296,
+    "sha256": "298cdd2f7bb676d53e101c8a83f811954ae84d15b7cb73f69057c43161403905",
+    "type": "video",
+    "duration": 5.733878,
+    "width": 720,
+    "height": 1280,
+    "codec": "h264",
+    "fps": "205800/3433",
+    "audio": {
+      "codec": "aac",
+      "channels": 2,
+      "sampleRate": "44100"
+    },
+    "rotation": 0,
+    "frames": [
+      "artifacts/final-media/1000164097-0.jpg",
+      "artifacts/final-media/1000164097-1.jpg",
+      "artifacts/final-media/1000164097-2.jpg",
+      "artifacts/final-media/1000164097-3.jpg",
+      "artifacts/final-media/1000164097-4.jpg",
+      "artifacts/final-media/1000164097-5.jpg"
+    ],
+    "decoded": true,
+    "observation": "Playa, persona corriendo junto a un perro en la orilla. Plano amplio vertical; horizonte y movimiento legibles.",
+    "destination": "Brasil, después de las dos fotos; completo. Poster 2,3 s.",
+    "derivative": {
+      "source": "brasil/1000164097.mp4",
+      "dest": "public/media/videos/brasil-playa.mp4",
+      "bytes": 1308083
+    }
+  },
+  {
+    "file": "material-final/brasil/1000164106.jpg",
+    "bytes": 55469,
+    "sha256": "71439a2e440177707e56016a8fad8cf5bd09ac1d70ff64edcb07b6ad24e709d8",
+    "type": "photo",
+    "width": 719,
+    "height": 948,
+    "orientation": 1,
+    "observation": "Compañero sentado con auriculares en la arena. Vertical, resolución moderada. No se atribuye su identidad por semejanza.",
+    "destination": "Brasil, foto 2. No se confunde con el video de Danilo en competencia.",
+    "derivative": {
+      "source": "brasil/1000164106.jpg",
+      "dest": "public/media/recuerdos/brasil/playa.webp",
+      "bytes": 52300
+    }
+  },
+  {
+    "file": "material-final/competencias/1000164120.mp4",
+    "bytes": 1108583,
+    "sha256": "023373fea088558c9f0b184692ea7612f3ba8cf00fbbdafba85342584d579bf0",
+    "type": "video",
+    "duration": 5.91,
+    "width": 464,
+    "height": 832,
+    "codec": "h264",
+    "fps": "35500/591",
+    "audio": {
+      "codec": "aac",
+      "channels": 2,
+      "sampleRate": "44100"
+    },
+    "rotation": 0,
+    "frames": [
+      "artifacts/final-media/1000164120-0.jpg",
+      "artifacts/final-media/1000164120-1.jpg",
+      "artifacts/final-media/1000164120-2.jpg",
+      "artifacts/final-media/1000164120-3.jpg",
+      "artifacts/final-media/1000164120-4.jpg",
+      "artifacts/final-media/1000164120-5.jpg"
+    ],
+    "decoded": true,
+    "observation": "Público sentado al aire libre ante edificio verde; la cámara pasa al profesor de traje que sonríe y mueve los brazos, y vuelve al público. Se revisaron seis momentos y la secuencia de frames confirma el gesto, sin atribuir palabras.",
+    "destination": "Competencias. Fotograma de contexto 0,3 s durante 5 s, revelación con acercamiento suave, video completo; el gesto destaca aproximadamente entre 2 y 5 s. Poster 3,55 s. No está en una playa y el profesor no lleva auriculares.",
+    "derivative": {
+      "source": "competencias/1000164120.mp4",
+      "dest": "public/media/videos/danilo-competencia.mp4",
+      "bytes": 1112994
+    }
+  },
+  {
+    "file": "material-final/dragon/1000164110.jpg",
+    "bytes": 86701,
+    "sha256": "2258f67b8b1d7888c8625ab713a7b9003f459aae9cbabe158f32fbb2366ab1ed",
+    "type": "photo",
+    "width": 718,
+    "height": 810,
+    "orientation": 1,
+    "observation": "Dragón rojo y estructura de varillas dentro de caja de madera. Vertical, toma inclinada original.",
+    "destination": "Dragón, foto 2: caja. No se modifica la inclinación creativa de la toma.",
+    "derivative": {
+      "source": "dragon/1000164110.jpg",
+      "dest": "public/media/recuerdos/dragon/caja.webp",
+      "bytes": 96688
+    }
+  },
+  {
+    "file": "material-final/dragon/1000164111.jpg",
+    "bytes": 81531,
+    "sha256": "2dc9e77af6b15e327f02a0d8de7942236993a521b20eed89d5ce9b125a9ebb37",
+    "type": "photo",
+    "width": 702,
+    "height": 876,
+    "orientation": 1,
+    "observation": "Esqueleto de varillas del dragón en el aula. Vertical, toma diagonal original.",
+    "destination": "Dragón, foto 1: esqueleto.",
+    "derivative": {
+      "source": "dragon/1000164111.jpg",
+      "dest": "public/media/recuerdos/dragon/esqueleto.webp",
+      "bytes": 84696
+    }
+  },
+  {
+    "file": "material-final/extras/1000164122.jpg",
+    "bytes": 77314,
+    "sha256": "08dbb23d82f383a3d0acf80edd253fc08e1e9cae4481fb46ccd7a4e19d7ed8ee",
+    "type": "photo",
+    "width": 1038,
+    "height": 1430,
+    "orientation": 1,
+    "observation": "Profesor de camisa celeste en aula junto a portátil. Vertical, enfoque moderado.",
+    "destination": "Galería complementaria, orden 1. No hay evidencia de qué proyecto se estaba trabajando.",
+    "derivative": {
+      "source": "extras/1000164122.jpg",
+      "dest": "public/media/recuerdos/extras/en-clase.webp",
+      "bytes": 47400
+    }
+  },
+  {
+    "file": "material-final/extras/1000164123.jpg",
+    "bytes": 89840,
+    "sha256": "de2026fbd58a3334d04ebd942f675d16caffad8f0f31fabd82db9ad35493f49c",
+    "type": "photo",
+    "width": 1206,
+    "height": 892,
+    "orientation": 1,
+    "observation": "Selfie de dos alumnas y el profesor, sonrientes. Horizontal. No hay evidencia de lugar o fecha.",
+    "destination": "Galería complementaria, orden 2.",
+    "derivative": {
+      "source": "extras/1000164123.jpg",
+      "dest": "public/media/recuerdos/extras/selfie.webp",
+      "bytes": 68450
+    }
+  },
+  {
+    "file": "material-final/extras/1000164125.jpg",
+    "bytes": 1606171,
+    "sha256": "3bcd30fe3c195f6f398adf991307759b9a54d224f748320f88e4d135946dec62",
+    "type": "photo",
+    "width": 4032,
+    "height": 3024,
+    "orientation": 1,
+    "observation": "Foto grupal del curso y profesor en aula amarilla. Horizontal, alta resolución; conservar a todas las personas.",
+    "destination": "SISCO-EDU, foto contextual del curso, sin presentarla como prueba de una actividad o pantalla del sistema.",
+    "derivative": {
+      "source": "extras/1000164125.jpg",
+      "dest": "public/media/recuerdos/grupo-aula.webp",
+      "bytes": 336708
+    }
+  },
+  {
+    "file": "material-final/extras/1000164126.jpg",
+    "bytes": 525183,
+    "sha256": "dda778b1e157099d7f1dc153979379ddc54077fa37f9616fe169c4913fec5568",
+    "type": "photo",
+    "width": 3024,
+    "height": 4032,
+    "orientation": 1,
+    "observation": "Profesor sonriente en colectivo con almohada rosa. Vertical, alta resolución. No se confirma qué viaje es.",
+    "destination": "Galería complementaria, orden 3.",
+    "derivative": {
+      "source": "extras/1000164126.jpg",
+      "dest": "public/media/recuerdos/extras/colectivo.webp",
+      "bytes": 204592
+    }
+  },
+  {
+    "file": "material-final/extras/1000164129.jpg",
+    "bytes": 14483,
+    "sha256": "b1a2e3bffa9ae78eb8b674bac79c7192648d16e30f30c2706a0a67a2e31c092c",
+    "type": "photo",
+    "width": 265,
+    "height": 386,
+    "orientation": 1,
+    "observation": "Profesor ante mesa con mantel floral. Vertical muy pequeña, algo blanda. No ampliar el archivo ni atribuir lugar.",
+    "destination": "Galería complementaria, orden 4. Conservada por su valor de recuerdo; se advierte aquí su baja resolución.",
+    "derivative": {
+      "source": "extras/1000164129.jpg",
+      "dest": "public/media/recuerdos/extras/mesa.webp",
+      "bytes": 14208
+    }
+  },
+  {
+    "file": "material-final/extras/foto-danilo-gracioso.jpg",
+    "bytes": 94987,
+    "sha256": "d7d03fc9fd54f21a6447402fe9f6b58940895b22bf559fd3e04ac0c026a70c7b",
+    "type": "photo",
+    "width": 1165,
+    "height": 1600,
+    "orientation": 1,
+    "observation": "Retrato del profesor de camisa azul oscura. Vertical, cara completa, gesto informal.",
+    "destination": "Galería complementaria, orden 5.",
+    "derivative": {
+      "source": "extras/foto-danilo-gracioso.jpg",
+      "dest": "public/media/recuerdos/extras/retrato.webp",
+      "bytes": 69902
+    }
+  },
+  {
+    "file": "material-final/mensajes.txt",
+    "bytes": 1421,
+    "sha256": "4f702745173db1b0db4fdca42963c8def4aaca4bd7d443decbf77b62b4e4746c",
+    "type": "text",
+    "observation": "Documento UTF-8: ocho nombres, seis mensajes y dos entradas vacías. Incluye dos instrucciones editoriales de emojis.",
+    "destination": "Fuente de testimonios. Ortega ampliado a pedido de su autor; emojis aplicados con autorización explícita. Los demás textos mantienen sus palabras, ortografía y puntuación.",
+    "derivative": null
+  },
+  {
+    "file": "material-final/videos/1000164121.mp4",
+    "bytes": 699658,
+    "sha256": "76dd51481fec419ff0944f076a0d40acf60754f2aecd33d79a3297481dbee0a2",
+    "type": "video",
+    "duration": 3.8,
+    "width": 576,
+    "height": 1024,
+    "codec": "h264",
+    "fps": "30/1",
+    "audio": {
+      "codec": "aac",
+      "channels": 2,
+      "sampleRate": "44100"
+    },
+    "rotation": 0,
+    "frames": [
+      "artifacts/final-media/1000164121-0.jpg",
+      "artifacts/final-media/1000164121-1.jpg",
+      "artifacts/final-media/1000164121-2.jpg",
+      "artifacts/final-media/1000164121-3.jpg",
+      "artifacts/final-media/1000164121-4.jpg",
+      "artifacts/final-media/1000164121-5.jpg"
+    ],
+    "decoded": true,
+    "observation": "Interior del aula, profesor con sombrero de vaquero sonriendo. Movimiento de cámara y poca luz.",
+    "destination": "Galería complementaria, orden 6; completo. Poster 2,3 s.",
+    "derivative": {
+      "source": "videos/1000164121.mp4",
+      "dest": "public/media/videos/sombrero.mp4",
+      "bytes": 490702
+    }
+  },
+  {
+    "file": "material-final/videos/1000164124.mp4",
+    "bytes": 1508296,
+    "sha256": "298cdd2f7bb676d53e101c8a83f811954ae84d15b7cb73f69057c43161403905",
+    "type": "video",
+    "duration": 5.733878,
+    "width": 720,
+    "height": 1280,
+    "codec": "h264",
+    "fps": "205800/3433",
+    "audio": {
+      "codec": "aac",
+      "channels": 2,
+      "sampleRate": "44100"
+    },
+    "rotation": 0,
+    "frames": [
+      "artifacts/final-media/1000164124-0.jpg",
+      "artifacts/final-media/1000164124-1.jpg",
+      "artifacts/final-media/1000164124-2.jpg",
+      "artifacts/final-media/1000164124-3.jpg",
+      "artifacts/final-media/1000164124-4.jpg",
+      "artifacts/final-media/1000164124-5.jpg"
+    ],
+    "decoded": true,
+    "observation": "Misma playa, persona y perro; duplicado byte a byte de brasil/1000164097.mp4. También se extrajeron e inspeccionaron sus frames.",
+    "destination": "Fuera de la secuencia para no duplicar el mismo clip. Original intacto.",
+    "derivative": null
+  },
+  {
+    "file": "material-final/videos/1000164127.mp4",
+    "bytes": 3808520,
+    "sha256": "7c8dfcbc74175557d38f667c4dd52b208416c4ee388ff441ca90f31ba2a58961",
+    "type": "video",
+    "duration": 16.159637,
+    "width": 720,
+    "height": 1280,
+    "codec": "h264",
+    "fps": "19360/323",
+    "audio": {
+      "codec": "aac",
+      "channels": 2,
+      "sampleRate": "44100"
+    },
+    "rotation": 0,
+    "frames": [
+      "artifacts/final-media/1000164127-0.jpg",
+      "artifacts/final-media/1000164127-1.jpg",
+      "artifacts/final-media/1000164127-2.jpg",
+      "artifacts/final-media/1000164127-3.jpg",
+      "artifacts/final-media/1000164127-4.jpg",
+      "artifacts/final-media/1000164127-5.jpg"
+    ],
+    "decoded": true,
+    "observation": "Salón con público y tres personas al frente; texto bíblico verde en pared. No se identifica a los participantes ni se supone una competencia.",
+    "destination": "Galería complementaria, orden 7; completo. Poster 9,7 s.",
+    "derivative": {
+      "source": "videos/1000164127.mp4",
+      "dest": "public/media/videos/encuentro.mp4",
+      "bytes": 3713858
+    }
+  },
+  {
+    "file": "material-final/videos/video-danilo-gracioso.mp4",
+    "bytes": 267394,
+    "sha256": "2de3e780512b6c96d4aff48dbc171c7e790ac6f7ca7cc33e176d7d60efe8b668",
+    "type": "video",
+    "duration": 1.15,
+    "width": 464,
+    "height": 832,
+    "codec": "h264",
+    "fps": "60/1",
+    "audio": null,
+    "rotation": 0,
+    "frames": [
+      "artifacts/final-media/video-danilo-gracioso-0.jpg",
+      "artifacts/final-media/video-danilo-gracioso-1.jpg",
+      "artifacts/final-media/video-danilo-gracioso-2.jpg",
+      "artifacts/final-media/video-danilo-gracioso-3.jpg",
+      "artifacts/final-media/video-danilo-gracioso-4.jpg",
+      "artifacts/final-media/video-danilo-gracioso-5.jpg"
+    ],
+    "decoded": true,
+    "observation": "Profesor tras división de aula, mano junto a la cara; gesto muy breve, sin pista de audio. No es el baile del evento.",
+    "destination": "Galería complementaria, orden 8; completo, sin loop ni audio añadido. Poster 0,6 s.",
+    "derivative": {
+      "source": "videos/video-danilo-gracioso.mp4",
+      "dest": "public/media/videos/gesto.mp4",
+      "bytes": 103679
+    }
+  }
+]

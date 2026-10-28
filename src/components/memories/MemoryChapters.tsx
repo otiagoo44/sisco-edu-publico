@@ -1,24 +1,27 @@
 import type { ReactNode } from "react";
 import type { Memory } from "../../content/types";
-import { ChapterImage, PendingMedia } from "./ChapterMedia";
+import { ChapterImage, ChapterVideo } from "./ChapterMedia";
 
-type Props = { memory: Memory; photoIndex: number };
+type Props = { memory: Memory; photoIndex: number; paused: boolean; onPlayingChange: (playing: boolean) => void };
 function ChapterLayout({
   memory,
   photoIndex,
   decoration,
+  paused,
+  onPlayingChange,
 }: Props & { decoration?: ReactNode }) {
-  const image = memory.photos[photoIndex];
-  const next =
-    memory.photos.length > 1
-      ? memory.photos[(photoIndex + 1) % memory.photos.length]
-      : undefined;
+  const media = memory.media[photoIndex];
+  const image = media?.type === "image" ? media.image : undefined;
+  const companion = memory.composition !== "construction" && media?.type === "image"
+    ? memory.media.find((item) => item.type === "image" && item !== media)
+    : undefined;
+  const next = companion?.type === "image" ? companion.image : undefined;
   return (
     <div
       className={
         "memory-composition memory-" +
         memory.composition +
-        (image ? " has-media" : " text-only")
+        (media ? " has-media" : " text-only") + (media?.type === "video" ? " has-video" : "")
       }
     >
       <div className="memory-copy">
@@ -30,7 +33,7 @@ function ChapterLayout({
       </div>
       <div className="memory-art">
         {decoration}
-        {image ? (
+        {media?.type === "video" ? <ChapterVideo key={media.src} media={media} paused={paused} onPlayingChange={onPlayingChange} /> : image ? (
           <>
             <ChapterImage
               key={image.src}
@@ -54,13 +57,14 @@ function ChapterLayout({
                   blueprint: "ARCA",
                   travel: "BRASIL",
                   workspace: "SISCO\nEDU",
+                  competition: "RECUERDOS",
                 }[memory.composition]
               }
             </div>
-            <PendingMedia label={memory.title} />
           </>
         )}
       </div>
+      {media && <p className="memory-caption">{media.caption}</p>}
     </div>
   );
 }
@@ -108,5 +112,6 @@ export const chapterComponents = {
   construction: DragonChapter,
   blueprint: RoboticsChapter,
   travel: BrazilChapter,
+  competition: BrazilChapter,
   workspace: SiscoChapter,
 };

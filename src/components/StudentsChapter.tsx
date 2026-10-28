@@ -64,6 +64,7 @@ export function StudentsChapter({
   function select(next: number) {
     setIndex(next);
     title.current?.focus({ preventScroll: true });
+    root.current?.scrollIntoView({ behavior: "instant", block: "start" });
   }
   return (
     <div className="students-chapter" ref={root}>
@@ -85,7 +86,7 @@ export function StudentsChapter({
               image={current.photo!}
               className="student-portrait"
             />
-            <div className="student-statement">
+            <div className={"student-statement" + (current.message.length > 400 ? " is-long" : "")}>
               <p className="student-name">{current.name}</p>
               <blockquote>{current.message}</blockquote>
               <p className="student-counter" aria-live="polite">

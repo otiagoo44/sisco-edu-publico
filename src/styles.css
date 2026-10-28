@@ -1058,9 +1058,11 @@ button:active {
   color: var(--color-on-primary);
   padding: 14px 20px;
   z-index: 10;
+  clip-path: inset(50%);
 }
 .skip-link:focus {
   transform: none;
+  clip-path: none;
 }
 @media (prefers-reduced-motion: no-preference) {
   .invitation-copy {
@@ -1990,6 +1992,54 @@ button:active {
   justify-content: space-between;
   gap: 22px;
 }
+.memory-composition.has-media { position: relative; }
+.memory-construction.has-media { grid-template-columns: 0.75fr 1.25fr; }
+.memory-construction .memory-main-image { width: 100%; height: 100%; inset: 0; transform: none; }
+.memory-construction .construction-rule { bottom: -12px; transform: none; height: 3px; }
+.memory-caption { order: 3; grid-column: 1 / -1; font-size: 16px; line-height: 1.5; margin: -15px 0 0; }
+.memory-blueprint .memory-art { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.memory-blueprint .memory-main-image, .memory-blueprint .memory-secondary-image { position: relative; width: 100%; height: 100%; inset: auto; transform: none; border: 0; }
+.memory-workspace .memory-main-image { height: 100%; }
+.memory-workspace .workspace-bracket { display: none; }
+.memory-competition { background: var(--color-paper); color: var(--color-dark-ink); }
+.memory-competition .memory-main-image { width: 100%; height: 100%; transform: rotate(-2deg); }
+.memory-composition.has-video .memory-art { height: auto; min-height: 470px; }
+.chapter-video { width: 100%; min-width: 0; }
+.chapter-video video { display: block; width: 100%; height: min(55svh, 490px); min-height: 270px; object-fit: contain; background: var(--color-canvas); }
+.video-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+.video-controls .chapter-control { font-size: 14px; }
+.video-status { font-size: 14px; line-height: 1.5; margin: 12px 0 0; }
+.video-fallback .chapter-image { height: 400px; }
+.video-fallback p { font-size: 16px; line-height: 1.5; margin-top: 12px; }
+.chapter-control:disabled, .memory-chapter-nav button:disabled { opacity: 0.5; cursor: default; }
+.memory-extras-link { padding: 0 56px 24px; }
+.extra-memories { width: min(900px, calc(100% - 28px)); max-height: calc(100svh - 28px); overflow: auto; padding: 28px; background: var(--color-paper); color: var(--color-dark-ink); border: 0; }
+.extra-memories::backdrop { background: rgb(17 20 41 / 85%); }
+.extra-feature { margin-top: 22px; }
+.extra-feature > .chapter-image { height: min(55svh, 500px); background: var(--color-canvas); }
+.extra-caption { margin: 16px 0; font-size: 18px; }
+.extra-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.extra-thumbnails { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; margin-top: 22px; }
+.extra-thumbnails button { border: 3px solid transparent; padding: 0; background: var(--color-canvas); height: 80px; }
+.extra-thumbnails button[aria-current] { border-color: var(--color-primary); }
+.extra-thumbnails img { width: 100%; height: 100%; object-fit: contain; display: block; }
+@media (max-width: 767px) {
+  .memory-extras-link { padding: 0 20px 24px; }
+  .memory-composition.has-media { gap: 26px; }
+  .memory-construction .memory-art { height: 420px; }
+  .memory-blueprint .memory-art { height: 420px; display: block; }
+  .memory-blueprint .memory-main-image { width: 100%; height: 100%; }
+  .memory-blueprint .memory-secondary-image { display: none; }
+  .memory-composition.has-video .memory-art { min-height: 0; }
+  .memory-caption { margin-top: 0; }
+  .extra-memories { padding: 20px; }
+  .extra-thumbnails { grid-template-columns: repeat(4, 1fr); }
+  .extra-controls .chapter-control { flex: 1 1 110px; }
+  .extra-controls > span { order: -1; flex-basis: 100%; text-align: center; }
+  .stage-memories .film-footer { flex-wrap: wrap; gap: 16px; }
+  .stage-memories .film-playback { width: 100%; justify-content: space-between; }
+  .stage-memories .film-footer .skip-controls { position: static; }
+}
 .chapter-navigation,
 .photo-navigation {
   display: flex;
@@ -2072,6 +2122,11 @@ button:active {
   margin: 0;
   white-space: pre-line;
   overflow-wrap: anywhere;
+}
+.student-statement.is-long blockquote {
+  font-size: clamp(22px, 1.85vw, 29px);
+  line-height: 1.5;
+  letter-spacing: -0.015em;
 }
 .student-counter {
   margin-top: 28px;

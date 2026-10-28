@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { ContentImage } from "../../content/types";
+import { useEffect, useRef, useState } from "react";
+import type { ContentImage, MemoryVideo } from "../../content/types";
 
 export function ChapterImage({
   image,
@@ -49,4 +49,78 @@ export function PendingMedia({ label }: { label: string }) {
       <small>Sólo visible en desarrollo</small>
     </div>
   ) : null;
+}
+
+export function ChapterVideo({ media, paused = false, onPlayingChange }: {
+  media: MemoryVideo;
+  paused?: boolean;
+  onPlayingChange?: (playing: boolean) => void;
+}) {
+  const video = useRef<HTMLVideoElement>(null);
+  const resume = useRef(false);
+  const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const [ended, setEnded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [blocked, setBlocked] = useState(false);
+  const start = media.start ?? 0;
+  const end = media.end ?? media.duration;
+  async function play() {
+    const node = video.current;
+    if (!node) return;
+    if (node.currentTime >= end - 0.05 || node.currentTime < start) node.currentTime = start;
+    setEnded(false);
+    try { await node.play(); setBlocked(false); }
+    catch { setBlocked(true); }
+  }
+  useEffect(() => {
+    if (paused) {
+      resume.current = !!video.current && !video.current.paused;
+      video.current?.pause();
+    } else if (resume.current) {
+      resume.current = false;
+      video.current?.play().catch(() => setBlocked(true));
+    }
+  }, [paused]);
+  const status = (value: boolean) => {
+    setPlaying(value);
+    onPlayingChange?.(value);
+  };
+  return (
+    <div className="chapter-video" data-video-state={failed ? "error" : ended ? "ended" : playing ? "playing" : "paused"}>
+      {failed ? (
+        <div className="video-fallback">
+          <ChapterImage image={{ src: media.poster, alt: media.alt, fit: "contain" }} />
+          <p role="status">No se pudo reproducir el video. Podés seguir con los recuerdos.</p>
+        </div>
+      ) : (
+        <video ref={video} src={media.src} poster={media.poster} aria-label={media.alt}
+          width={media.width} height={media.height} playsInline controls preload="metadata" muted={muted}
+          onLoadedMetadata={() => { if (video.current && start) video.current.currentTime = start; }}
+          onPlay={() => { setEnded(false); status(true); }} onPause={() => status(false)}
+          onEnded={() => { setEnded(true); status(false); }}
+          onVolumeChange={() => setMuted(video.current?.muted ?? true)}
+          onTimeUpdate={() => {
+            const node = video.current;
+            if (node && media.end !== undefined && node.currentTime >= end) {
+              node.pause(); setEnded(true); status(false);
+            }
+          }}
+          onError={() => { setFailed(true); status(false); }}
+        />
+      )}
+      {!failed && <div className="video-controls">
+        <button className="chapter-control" onClick={() => playing ? video.current?.pause() : void play()}>
+          {playing ? "Pausar video" : ended ? "Volver a ver el video" : "Reproducir video"}
+        </button>
+        {media.sound === "available" ? <button className="chapter-control" aria-pressed={!muted}
+          onClick={() => { if (video.current) { video.current.muted = !muted; setMuted(!muted); } }}>
+          {muted ? "Activar sonido del video" : "Silenciar video"}
+        </button> : <span>Video sin audio</span>}
+      </div>}
+      <p className="video-status" aria-live="polite">
+        {failed ? "Los demás recuerdos siguen disponibles." : blocked ? "Pulsá reproducir para iniciar el video." : ended ? "Podés volver a verlo o continuar cuando quieras." : playing ? "La secuencia espera a que termines de verlo." : "El video empieza cuando vos quieras."}
+      </p>
+    </div>
+  );
 }

@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { memories } from "../../content/memories";
 import { chapterComponents } from "./MemoryChapters";
+import { ExtraMemories } from "./ExtraMemories";
 
 const ordered = [...memories].sort((a, b) => a.order - b.order);
 export function MemoryJourney({
@@ -17,17 +18,29 @@ export function MemoryJourney({
   const [photoIndex, setPhotoIndex] = useState(0);
   const [manual, setManual] = useState(false);
   const [replay, setReplay] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [extras, setExtras] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
   const timeline = useRef<gsap.core.Timeline | null>(null);
+  const navigationRequested = useRef(false);
   const memory = ordered[index];
+  const media = memory?.media[photoIndex];
   const changeChapter = (next: number, automatic = false) => {
+    navigationRequested.current = !automatic;
     setIndex(next);
     setPhotoIndex(0);
+    setPlaying(false);
     setManual(!automatic);
   };
   useEffect(() => {
     if (!ordered.length) onComplete();
   }, [onComplete]);
+  useEffect(() => {
+    if (!navigationRequested.current) return;
+    navigationRequested.current = false;
+    stage.current?.querySelector('h1')?.focus({ preventScroll: true });
+    stage.current?.parentElement?.scrollIntoView({ behavior: "instant", block: "start" });
+  }, [index, photoIndex, replay]);
   useLayoutEffect(() => {
     if (!memory || !stage.current) return;
     const context = gsap.context(() => {
@@ -39,17 +52,19 @@ export function MemoryJourney({
           { y: 24, duration: 0.55, ease: "power3.out" },
           0,
         );
-        if (stage.current!.querySelector(".memory-main-image"))
+        if (stage.current!.querySelector(".memory-main-image")) {
+          const transition = memory.composition === "travel"
+            ? { y: photoIndex % 2 ? -22 : 22, opacity: 0, duration: 0.65, ease: "power3.out" }
+            : memory.composition === "blueprint"
+              ? { y: 24, opacity: 0, duration: 0.7, ease: "power3.out" }
+              : { clipPath: "inset(0 100% 0 0)", scale: 1.03, duration: 0.65, ease: "power3.out" };
           tl.from(
             ".memory-main-image",
-            {
-              clipPath: "inset(0 100% 0 0)",
-              scale: 1.03,
-              duration: 0.65,
-              ease: "power3.out",
-            },
+            transition,
             0.05,
           );
+        }
+        if (media?.type === "video") tl.from(".chapter-video", {scale: 0.96, opacity: 0, duration: 0.7, ease: "power3.out"}, 0.3);
         if (stage.current!.querySelector(".memory-secondary-image"))
           tl.from(
             ".memory-secondary-image",
@@ -60,12 +75,13 @@ export function MemoryJourney({
       const words = (memory.title + " " + memory.description).split(
         /\s+/,
       ).length;
-      const read = Math.max(4.2, words * 0.22 + 1.2);
+      const read = Math.max(media?.type === "image" ? media.holdSeconds ?? 7 : 7, words * 0.24 + 1.5);
       tl.addLabel("fully-readable", 0.85);
       tl.to({}, { duration: 0.85 + read + 0.25 }, 0);
-      if (!manual)
+      if (!manual && !reduced && media?.type !== "video")
         tl.call(() => {
-          if (index < ordered.length - 1) changeChapter(index + 1, true);
+          if (photoIndex < memory.media.length - 1) setPhotoIndex(photoIndex + 1);
+          else if (index < ordered.length - 1) changeChapter(index + 1, true);
           else onComplete();
         });
     }, stage);
@@ -73,18 +89,19 @@ export function MemoryJourney({
       context.revert();
       timeline.current = null;
     };
-  }, [index, photoIndex, manual, reduced, replay, memory, onComplete]);
+  }, [index, photoIndex, manual, reduced, replay, memory, media, onComplete]);
   useEffect(() => {
     const tl = timeline.current;
     if (paused && tl && tl.time() < 0.85) tl.time(0.85);
-    tl?.paused(paused);
-  }, [paused, index, photoIndex, manual, replay, reduced]);
+    tl?.paused(paused || extras);
+  }, [paused, extras, index, photoIndex, manual, replay, reduced]);
   if (!memory) return null;
   const Chapter = chapterComponents[memory.composition];
   function changePhoto(direction: number) {
+    navigationRequested.current = true;
     setManual(true);
     setPhotoIndex(
-      (photoIndex + direction + memory.photos.length) % memory.photos.length,
+      (photoIndex + direction + memory.media.length) % memory.media.length,
     );
   }
   return (
@@ -99,6 +116,7 @@ export function MemoryJourney({
         {ordered.map((item, i) => (
           <button
             key={item.id}
+            disabled={playing}
             aria-current={i === index ? "step" : undefined}
             onClick={() => changeChapter(i)}
           >
@@ -107,28 +125,30 @@ export function MemoryJourney({
         ))}
       </nav>
       <div ref={stage} className="memory-stage">
-        <Chapter memory={memory} photoIndex={photoIndex} />
+        <Chapter memory={memory} photoIndex={photoIndex} paused={paused || extras} onPlayingChange={setPlaying} />
       </div>
       <div className="memory-controls">
-        {memory.photos.length > 1 && (
+        {memory.media.length > 1 && (
           <div
             className="photo-navigation"
-            aria-label="Fotografías del recuerdo"
+            aria-label="Fotos y videos del recuerdo"
           >
             <button
               className="chapter-control"
+              disabled={playing}
               onClick={() => changePhoto(-1)}
-              aria-label="Foto anterior"
+              aria-label="Recuerdo anterior"
             >
               ←
             </button>
             <span aria-live="polite">
-              {photoIndex + 1} / {memory.photos.length}
+              {photoIndex + 1} / {memory.media.length}
             </span>
             <button
               className="chapter-control"
+              disabled={playing}
               onClick={() => changePhoto(1)}
-              aria-label="Foto siguiente"
+              aria-label="Recuerdo siguiente"
             >
               →
             </button>
@@ -137,13 +157,14 @@ export function MemoryJourney({
         <div className="chapter-navigation">
           <button
             className="chapter-control"
-            disabled={index === 0}
+            disabled={index === 0 || playing}
             onClick={() => changeChapter(index - 1)}
           >
             Anterior capítulo
           </button>
           <button
             className="chapter-control"
+            disabled={playing}
             onClick={() => {
               setPhotoIndex(0);
               setManual(false);
@@ -154,6 +175,7 @@ export function MemoryJourney({
           </button>
           <button
             className="chapter-control next-chapter"
+            disabled={playing}
             onClick={() =>
               index < ordered.length - 1
                 ? changeChapter(index + 1)
@@ -165,6 +187,8 @@ export function MemoryJourney({
           </button>
         </div>
       </div>
+      <div className="memory-extras-link"><button className="chapter-control" onClick={() => { setManual(true); setExtras(true); }}>Más recuerdos · fotos y videos</button></div>
+      {extras && <ExtraMemories onClose={() => setExtras(false)} />}
     </div>
   );
 }

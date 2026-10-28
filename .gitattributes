@@ -4,3 +4,6 @@
 *.jpg binary
 *.woff binary
 *.woff2 binary
+# Preserve source media and testimony documents byte for byte, including line endings.
+material-final/** binary
+*.mp4 binary

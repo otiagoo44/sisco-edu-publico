@@ -207,9 +207,7 @@ test("recorrido real, nueve fotos y tiempos de lectura después de aparecer", as
     "data-memory",
     "dragon",
   );
-  await expect(page.locator("main")).toHaveAttribute("data-state", "students", {
-    timeout: 30_000,
-  });
+  await goStudents(page);
   await expect(page.locator("[data-development-only]")).toHaveCount(0);
   await page.getByRole("button", { name: "Ir a la pregunta" }).click();
   await expect(
@@ -347,7 +345,7 @@ test("recuerdos configurables, navegación, pausa y contenido pendiente sólo en
   page,
 }) => {
   await memoriesScene(page);
-  for (const label of ["Robótica", "Brasil", "SISCO-EDU", "Dragón"]) {
+  for (const label of ["Arca", "Brasil", "Competencias", "SISCO-EDU", "Dragón"]) {
     await page
       .getByRole("navigation", { name: "Capítulos de recuerdos" })
       .getByRole("button", { name: label, exact: true })
@@ -361,7 +359,7 @@ test("recuerdos configurables, navegación, pausa y contenido pendiente sólo en
     "dragon",
   );
   await goStudents(page);
-  await expect(page.locator(".student-feature")).toHaveCount(0);
+  await expect(page.locator(".student-feature")).toHaveCount(1);
   await expect(page.locator(".student-pending")).toHaveCount(0);
   await expect(page.locator("body")).not.toContainText("Daniel");
 });
@@ -423,16 +421,17 @@ test("fotos variables del recuerdo se exploran sin avanzar automáticamente", as
       description: "Contenido de prueba. No es un recuerdo real.",
       order: 1,
       composition: "construction",
-      photos: Array.from({ length: 5 }, (_, i) => ({
-        src: "/media/e2e-memory-" + i + ".svg",
-        alt: "Material de prueba automatizada " + i,
+      media: Array.from({ length: 5 }, (_, i) => ({
+        type: "image", order: i + 1, caption: "Imagen de prueba",
+        image: { src: "/media/e2e-memory-" + i + ".svg",
+        alt: "Material de prueba automatizada " + i },
       })),
     },
   ];
   await page.route("**/src/content/memories.ts*", (route) =>
     route.fulfill({
       contentType: "text/javascript",
-      body: "export const memories = " + JSON.stringify(content) + ";",
+      body: "export const extraMemories = []; export const memories = " + JSON.stringify(content) + ";",
     }),
   );
   await memoriesScene(page, devURL);
@@ -442,13 +441,13 @@ test("fotos variables del recuerdo se exploran sin avanzar automáticamente", as
   );
   await page.getByRole("button", { name: "Continuar presentación" }).click();
   await page
-    .getByRole("button", { name: "Foto siguiente", exact: true })
+    .getByRole("button", { name: "Recuerdo siguiente", exact: true })
     .click();
   await page.clock.runFor(20000);
   await expect(page.locator("main")).toHaveAttribute("data-state", "memories");
   await expect(page.locator(".photo-navigation > span")).toHaveText("2 / 5");
   await page
-    .getByRole("button", { name: "Foto anterior", exact: true })
+    .getByRole("button", { name: "Recuerdo anterior", exact: true })
     .click();
   await expect(page.locator(".photo-navigation > span")).toHaveText("1 / 5");
   await page.getByRole("button", { name: "Ver mensajes" }).click();
@@ -488,19 +487,17 @@ test("manifest pendiente no retrasa aceptar y una foto fallida tiene alternativa
   await expect(page.locator("main")).toHaveAttribute("data-state", "accepted");
 });
 
-test("desarrollo identifica placeholders y alumnos sin testimonios inventados", async ({
+test("desarrollo carga material real y deja fuera a quienes aún no enviaron mensajes", async ({
   page,
 }) => {
   await memoriesScene(page, devURL);
-  await expect(page.locator("[data-development-only]")).toContainText(
-    "Fotografías pendientes",
-  );
+  await expect(page.locator("[data-development-only]")).toHaveCount(0);
+  await expect(page.locator('.memory-main-image img')).toHaveAttribute('src', /esqueleto.webp/);
   await goStudents(page);
-  await expect(page.locator(".student-pending")).toContainText(
-    "Mensajes pendientes",
-  );
-  await expect(page.locator(".student-feature")).toHaveCount(0);
-  await expect(page.locator(".student-name")).toHaveCount(0);
+  await expect(page.locator(".student-pending")).toHaveCount(0);
+  await expect(page.locator(".student-feature")).toHaveCount(1);
+  await expect(page.locator(".student-counter")).toHaveText('1 de 6');
+  await expect(page.locator(".student-name")).toHaveText('Ortega');
 });
 
 test("audio sigue apagado hasta la acción explícita y no se guardan respuestas", async ({

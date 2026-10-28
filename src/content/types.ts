@@ -10,11 +10,34 @@ export type Memory = {
   title: string;
   navLabel?: string;
   description: string;
-  photos: ContentImage[];
+  media: MemoryMedia[];
   order: number;
-  composition: "construction" | "blueprint" | "travel" | "workspace";
+  composition: "construction" | "blueprint" | "travel" | "competition" | "workspace";
   date?: { label: string; confirmed: true };
 };
+export type MemoryPhoto = {
+  type: "image";
+  image: ContentImage;
+  caption: string;
+  order: number;
+  holdSeconds?: number;
+};
+export type MemoryVideo = {
+  type: "video";
+  src: string;
+  poster: string;
+  alt: string;
+  caption: string;
+  chapter: string;
+  order: number;
+  duration: number;
+  start?: number;
+  end?: number;
+  width: number;
+  height: number;
+  sound: "available" | "silent";
+};
+export type MemoryMedia = MemoryPhoto | MemoryVideo;
 export type Student = {
   id: string;
   name: string;

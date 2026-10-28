@@ -1,84 +1,44 @@
-# Cargar recuerdos y mensajes de la promo
+# Contenido final y mantenimiento
 
-El nombre confirmado es **Danilo**. Los hechos del dragón, arca, Brasil y proyecto de grado fueron aportados por la promoción. Todavía no se recibieron sus fotos históricas ni mensajes individuales: no se generaron sustitutos ni testimonios.
+El material original está en `material-final/` y permanece intacto. El inventario completo con clasificación visual, duplicados, destinos y hashes está en [MEDIA-INVENTORY.md](MEDIA-INVENTORY.md). El dragón y el arca fueron proyectos de robótica simultáneos, confirmado por el autor.
 
-## Recuerdos
+## Agregar mensajes pendientes
 
-1. Copiá fotos autorizadas a la carpeta correspondiente:
-   - `public/media/recuerdos/dragon/`
-   - `public/media/recuerdos/robotica/`
-   - `public/media/recuerdos/brasil/`
-   - `public/media/recuerdos/sisco-edu/`
-2. Abrí `src/content/memories.ts` y completá `photos` en el recuerdo.
-3. Guardá el archivo. Vite actualiza la vista; para publicar el cambio hay que generar un build nuevo.
+En `src/content/students.ts`, Arturo y Nahuel ya tienen nombre, retrato y orden. Pegá su mensaje real en `message` y cambiá `status: "draft"` a `status: "published"`. No hace falta modificar componentes. Hoy se publican seis mensajes, en el orden del documento original.
 
-```ts
-{
-  id: 'dragon',
-  title: 'Primer curso. Nuestro dragón.',
-  description: 'Empezamos construyendo un dragón.',
-  order: 1,
-  composition: 'construction',
-  photos: [
-    { src: '/media/recuerdos/dragon/construccion.webp', alt: 'Describí lo que realmente muestra esta fotografía' },
-    { src: '/media/recuerdos/dragon/resultado.webp', alt: 'Describí la fotografía del resultado' },
-  ],
-}
-```
+No reejecutes `scripts/import-final-students.mjs` después de editar manualmente testimonios: ese script reproduce la importación inicial desde `material-final/mensajes.txt` y sobrescribe students.ts. Si elegís usarlo, actualizá primero el documento fuente. Ortega tiene una ampliación expresamente solicitada por su autor. Las instrucciones editoriales de emojis de Flor y Zarate se aplicaron con autorización. Los demás textos mantienen sus palabras y errores originales.
 
-Los nombres de archivo anteriores son instrucciones; esos archivos no existen hasta que los cargues. La ruta pública empieza en `/media`, sin `public`. Se admiten WebP, JPEG y PNG. Usá nombres simples sin espacios. Recomendación: WebP de 1200–1600px en su lado mayor, manteniendo la orientación y el rostro sin modificar. Conservá los originales por separado.
+Cada mensaje es manual, con anterior/siguiente, índice y selector de todos los nombres. Nunca tiene autoplay ni límite de altura. Los retratos se muestran completos. No se publica un registro en borrador; marcar como publicado un registro incompleto hace fallar la validación.
 
-Las fotos de recuerdos se muestran completas por defecto para no cortar compañeros o partes del proyecto. Cada foto admite `fit: 'cover'` si preferís llenar el marco y `position: '50% 25%'` para ajustar ese encuadre sin modificar el archivo. Los retratos de alumnos usan `cover` por defecto y también admiten `fit: 'contain'`. Las capturas auténticas deben usar `kind: 'screenshot'` y siempre se muestran completas.
+## Fotos y videos
 
-`order` define el orden de capítulos. `navLabel` es un nombre corto opcional para su botón; si se omite se usa el título. `photos` admite una cantidad variable, sin cambiar componentes. Se muestran hasta dos imágenes como composición inicial; anterior/siguiente recorre todas. Al usar o enfocar los controles del capítulo se detiene el avance automático para explorar con calma. “Siguiente capítulo” cambia manualmente de etapa y “Repetir capítulo” reinicia el adelanto automático. El tiempo de lectura se adapta al largo del texto.
+`src/content/memories.ts` contiene cinco capítulos con una propiedad `media`, que intercala imágenes y videos. Las imágenes usan `{ type: "image", order, caption, holdSeconds, image: { src, alt, fit } }`. Las rutas públicas empiezan en `/media/` y sus archivos viven bajo `public/media/`.
 
-Las composiciones disponibles son:
+Los videos usan `{ type: "video", src, poster, alt, caption, chapter, order, duration, width, height, sound }`. `sound` admite `available` o `silent`; todos empiezan silenciados. Se pueden agregar `start` y `end` en segundos del archivo servido, con `0 <= start < end <= duration`. No se recorta ni transforma el original. Cada video activo carga sólo metadatos hasta reproducir. Los capítulos no avanzan mientras se reproduce y esperan una acción manual incluso después de terminar.
 
-| Valor          | Uso                                                     |
-| -------------- | ------------------------------------------------------- |
-| `construction` | Construcción y resultado, fotografías a dos escalas     |
-| `blueprint`    | Arca/robótica, plano gráfico abstracto y fotografías    |
-| `travel`       | Viaje, collage inclinado y cambio de color              |
-| `workspace`    | Trabajo y capturas, encuadres rectos y captura completa |
+Para un video nuevo, prepará MP4 H.264 y AAC con faststart, además de un poster WebP que represente el contenido. Las dimensiones y duración deben corresponder al archivo servido. No agregues voces, acciones, identidades, fechas o subtítulos no comprobados.
 
-Podés agregar recuerdos con identificadores únicos y una de esas composiciones. No hay un límite de fotos o de recuerdos codificado. No agregues fechas aproximadas: si una fecha está comprobada podés incluir `date: { label: 'Texto de la fecha confirmada', confirmed: true }`. De lo contrario omití el campo.
+`extraMemories` es la galería complementaria manual: fotos del aula, selfie, colectivo, mesa y retrato; videos de sombrero, encuentro y gesto. Allí se conservan recuerdos que no pueden adjudicarse con certeza a un viaje o competencia. Se monta un único video a la vez. No hay nuevas dependencias de runtime.
 
-Si `photos` está vacío, desarrollo muestra “Fotografías pendientes / Sólo visible en desarrollo”. El build de producción conserva únicamente el capítulo tipográfico con los hechos confirmados, sin fotos ficticias ni rótulos técnicos de relleno. Si una foto configurada falla, se informa “Imagen no disponible”; la navegación sigue funcionando.
+Las fotos usan WebP, orientación original y `contain` para conservar caras y proyectos. Un fotograma del público del video de competencia funciona como contexto, no como una foto original adicional. No se recibieron capturas específicas del desarrollo de SISCO-EDU: se usa la foto real del curso como conexión narrativa, con descripción fiel al aula.
 
-## Alumnos
-
-1. Copiá cada retrato autorizado a `public/media/alumnos/`.
-2. Editá `src/content/students.ts`.
-3. Reemplazá el borrador por datos reales. No uses un nombre o una declaración sin confirmar.
-
-```ts
-{
-  id: 'identificador-unico',
-  name: '', // Escribí el nombre real.
-  photo: {
-    src: '/media/alumnos/retrato.webp',
-    alt: '', // Descripción real del retrato.
-    position: '50% 25%', // Opcional.
-  },
-  message: '', // Pegá las palabras reales del compañero.
-  order: 1,
-  status: 'draft', // Cambiá a 'published' cuando esté completo.
-}
-```
-
-Los campos vacíos del ejemplo son deliberados: no son testimonios. Sólo se muestran alumnos con `status: 'published'`, nombre, foto, alt y mensaje completos. Un registro incompleto sigue oculto incluso si por error se marca como publicado. No se inventa ningún dato para completarlo.
-
-El profesor puede avanzar o retroceder entre compañeros, abrir “Ver todos” y seleccionar cualquier nombre. Los mensajes no tienen autoplay. “Ir a la pregunta” permite continuar sin leerlos todos. La cantidad es variable y los controles usan el total de registros completos, no posiciones fijas.
-
-Con cero testimonios completos, producción no muestra personas, citas ni nombres de relleno: queda la cabecera de la sección y la acción para continuar. Desarrollo muestra un panel claramente pendiente. Para revisar el contenido pendiente usá `npm run dev`; `npm run preview` sirve exactamente la versión de producción.
-
-## Verificar antes de compartir
+## Herramientas reproducibles
 
 ```sh
-npm run build
-npm run preview
-npm test
+node scripts/inspect-final-media.mjs
+node scripts/prepare-final-media.mjs
+node scripts/write-media-inventory.mjs
 npm run content:check
+npm run design:lint
+npm run build
+npm test
 ```
 
-El build verifica identificadores únicos, alt y existencia de los archivos configurados. Los alumnos incompletos se mantienen ocultos; los borradores no exigen tener archivos terminados. Comprobá nombres, texto real, permisos de las fotos, encuadre y lectura en celular. Los tests usan material sintético rotulado como prueba dentro del navegador de desarrollo; ese contenido no se agrega a la configuración publicada. No hay backend, panel, contraseñas, guardado de respuestas ni envíos.
+Los tres scripts de medios requieren FFmpeg y FFprobe; generan derivados, metadatos y hojas de contacto, sin modificar originales. El build utiliza Sharp para verificar imágenes y la estructura MP4 para validar codec y faststart; si FFprobe está disponible también contrasta duración y dimensiones reales. No requiere FFmpeg para publicar los derivados ya preparados.
+
+```sh
+npm run preview -- --port 4173 --strictPort
+node scripts/capture-final-review.mjs
+```
+
+La vista previa está en `http://127.0.0.1:4173/`. El script de capturas requiere Chrome instalado y guarda vistas reales de escritorio, tablet y celular en `docs/screenshots/final/`. El build no despliega ni envía respuestas. No hay backend, guardado, mensajes a terceros ni credenciales.
