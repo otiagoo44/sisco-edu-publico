@@ -42,7 +42,7 @@ for(const width of [1440,390,360,768]) {
   await page.getByRole('button',{name:'Cerrar ×'}).click();
   await page.getByRole('button',{name:'Ver mensajes',exact:false}).click();
   await save('10-ortega-largo');
-  for(const student of ['fio','flor','zarate','mati','thiago']) {
+  for(const student of ['fio','flor','zarate','mati','thiago','nahuel','arturo']) {
     await page.getByRole('button',{name:'Siguiente compañero',exact:false}).click();
     await save('11-'+student);
   }

@@ -207,6 +207,8 @@ Los cambios de tema aplican el color del texto sin interpolación, para conserva
 
 ## Do's and Don'ts
 
+Actualización cinematográfica: fotografías con dimensiones intrínsecas, fondos transparentes y máximo de altura adaptado al viewport. El arca presenta una foto distinta por paso; Brasil introduce un collage en el segundo paso. Títulos separados por palabras con máscaras GSAP, entradas distintas por composición y salida visible de cada foto. Permanencia de 1,8 segundos después de la entrada, más 0,25 de salida. Los videos del recorrido intentan autoplay con sonido tras iniciar el sistema; ante rechazo se intenta reproducción silenciada y se ofrece activar sonido. Al finalizar avanzan al siguiente recuerdo. La navegación explícita permite explorar manualmente. Testimonios siempre manuales. Esta actualización sustituye las reglas anteriores de 5–9 segundos y videos click-to-play. Las referencias Nike/Spotify se aplican a protagonismo fotográfico y controles discretos, conservando tokens; Taste 8/7/3, UI UX stagger 35ms y revisión Impeccable en cuatro tamaños.
+
 - Sí: partir del frontend comprobado y documentar rama/commit; diferenciar reconstrucción estática de una sesión del backend real.
 - Sí: leer textos después de que aparezcan, reconocer las fotos y mantener la pregunta estable.
 - Sí: comprobar ratón, tacto, teclado, reduced-motion, cambios de tamaño y contraste con capturas.

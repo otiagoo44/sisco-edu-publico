@@ -496,7 +496,7 @@ test("desarrollo carga material real y deja fuera a quienes aún no enviaron men
   await goStudents(page);
   await expect(page.locator(".student-pending")).toHaveCount(0);
   await expect(page.locator(".student-feature")).toHaveCount(1);
-  await expect(page.locator(".student-counter")).toHaveText('1 de 6');
+  await expect(page.locator(".student-counter")).toHaveText('1 de 8');
   await expect(page.locator(".student-name")).toHaveText('Ortega');
 });
 

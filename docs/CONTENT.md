@@ -1,10 +1,12 @@
 # Contenido final y mantenimiento
 
+Actualización de reproducción: el recorrido principal ahora avanza automáticamente con 1,8 segundos de permanencia por foto, además de sus transiciones. Los videos intentan iniciar con sonido y continúan al siguiente recuerdo al terminar. Si el navegador bloquea el sonido, se intenta autoplay silenciado con un control explícito para activarlo. Usar la navegación de capítulos/fotos cambia a exploración manual; Repetir capítulo retoma el montaje. Los testimonios y la galería complementaria siguen siendo manuales. Estas reglas reemplazan las indicaciones anteriores de click-to-play para el recorrido principal.
+
 El material original está en `material-final/` y permanece intacto. El inventario completo con clasificación visual, duplicados, destinos y hashes está en [MEDIA-INVENTORY.md](MEDIA-INVENTORY.md). El dragón y el arca fueron proyectos de robótica simultáneos, confirmado por el autor.
 
-## Agregar mensajes pendientes
+## Mantener los mensajes
 
-En `src/content/students.ts`, Arturo y Nahuel ya tienen nombre, retrato y orden. Pegá su mensaje real en `message` y cambiá `status: "draft"` a `status: "published"`. No hace falta modificar componentes. Hoy se publican seis mensajes, en el orden del documento original.
+En `src/content/students.ts` están los ocho mensajes publicados con sus retratos. Nahuel es el séptimo y Arturo cierra la sección con una composición destacada. Sus mensajes llegaron después de la entrega inicial y sus fuentes literales están en `docs/NAHUEL-MESSAGE.txt` y `docs/ARTURO-MESSAGE.txt`. Para agregar otro alumno, completá nombre, retrato, mensaje real y orden, y usá `status: "published"`.
 
 No reejecutes `scripts/import-final-students.mjs` después de editar manualmente testimonios: ese script reproduce la importación inicial desde `material-final/mensajes.txt` y sobrescribe students.ts. Si elegís usarlo, actualizá primero el documento fuente. Ortega tiene una ampliación expresamente solicitada por su autor. Las instrucciones editoriales de emojis de Flor y Zarate se aplicaron con autorización. Los demás textos mantienen sus palabras y errores originales.
 

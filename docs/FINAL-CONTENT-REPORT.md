@@ -1,5 +1,7 @@
 # Integración final: Operación Padrino / SISCO-EDU
 
+Actualización posterior: los ocho alumnos ya tienen mensaje y fotografía publicados. Nahuel ocupa el séptimo lugar y Arturo cierra con tipografía grande, retrato y «Seguir viendo» hacia la invitación. Los dos textos nuevos se conservan literalmente en `docs/ARTURO-MESSAGE.txt` y `docs/NAHUEL-MESSAGE.txt`. Ahora hay veinte fotografías nuevas publicadas, además de las once anteriores del profesor. No quedan testimonios pendientes. El registro siguiente describe la integración original. El ritmo, encuadres y autoplay fueron revisados posteriormente según `VISUAL-REVISION.md`.
+
 Fecha: 28 de octubre de 2026. Repositorio: `otiagoo44/sisco-edu-publico`. Arquitectura React, TypeScript, Vite y GSAP conservada; sin dependencias nuevas de runtime.
 
 ## Fotografías y mensajes

@@ -2459,3 +2459,49 @@ button:active {
     font-size: 18px;
   }
 }
+/* Photo-led cinematic compositions: intrinsic proportions, no letterbox frames. */
+.memory-composition.has-media { min-height: 620px; grid-template-columns: 0.85fr 1.15fr; gap: 30px; }
+.memory-art { display: flex !important; align-items: center; justify-content: center; height: 510px; }
+.memory-art .chapter-image { background: transparent; }
+.memory-art .memory-main-image { position: relative; inset: auto; width: auto !important; height: auto !important; max-width: 100%; max-height: 100%; border: 0; flex-shrink: 1; }
+.memory-art .memory-main-image img { width: auto; height: auto; max-width: 100%; max-height: 510px; object-fit: contain; }
+.memory-blueprint .memory-main-image { transform: rotate(2deg); }
+.memory-travel .memory-main-image { transform: rotate(-5deg); }
+.memory-travel .memory-secondary-image { width: 32%; height: auto; bottom: 8px; right: 0; }
+.memory-secondary-image img { height: auto; }
+.memory-copy h1 { font-size: clamp(44px,6vw,88px); line-height: .98; max-width: 12ch; }
+.memory-overline { letter-spacing: .08em; text-transform: uppercase; font-size: 11px; }
+.memory-caption { margin: 0; font-size: 13px; }
+.chapter-video { margin: auto; max-width: 480px; }
+.chapter-video video { width: auto; max-width: 100%; height: min(57svh,510px); margin: auto; background: transparent; }
+.video-controls { justify-content: center; }
+.video-status { text-align: center; }
+.memory-controls { padding-block: 10px; }
+.student-portrait { aspect-ratio: auto; width: fit-content; background: transparent; }
+.student-portrait img { width: auto; max-width: 100%; height: auto; max-height: 510px; }
+.extra-feature > .chapter-image { background: transparent; }
+.extra-feature > .chapter-image img { width: auto; max-width: 100%; margin: auto; }
+@media(max-width:767px) {
+ .memory-composition.has-media { min-height: 0; gap: 18px; padding: 20px 24px; }
+ .memory-copy h1 { font-size: clamp(35px,10vw,48px); max-width: 18ch; }
+ .memory-description { margin-top: 12px; }
+ .memory-overline { margin-bottom: 12px; }
+ .memory-art, .memory-construction .memory-art, .memory-blueprint .memory-art { height: min(49svh,440px); }
+ .memory-art .memory-main-image img { max-height: min(49svh,440px); }
+ .chapter-video video { height: min(48svh,420px); min-height: 0; }
+ .memory-stage { flex: initial; }
+ .memory-chapter-nav { gap: 6px 16px; padding-bottom: 8px; }
+ .memory-controls, .memory-extras-link { font-size: 12px; }
+ .student-portrait img { max-height: 420px; }
+}
+.memory-word-shell { display: inline-block; overflow: clip; vertical-align: bottom; padding-bottom: .1em; margin-bottom: -.1em; margin-inline-end: .22em; }
+.memory-word { display: inline-block; }
+.student-feature.is-course-message { grid-template-columns: minmax(180px,.55fr) minmax(0,1.45fr); gap: 55px; padding: 45px 0; border-block: 1px solid var(--color-border); }
+.is-course-message .student-portrait { transform: rotate(3deg); max-width: 300px; justify-self: center; }
+.is-course-message .student-name { font-size: 24px; }
+.is-course-message .student-statement blockquote { font-size: clamp(32px,4vw,60px); line-height: 1.15; letter-spacing: -.035em; padding-bottom: .15em; }
+@media(max-width:767px) {
+ .student-feature.is-course-message { display: flex; flex-direction: column-reverse; gap: 24px; padding: 28px 0; }
+ .is-course-message .student-portrait { width: 180px; margin: 0 auto; }
+ .is-course-message .student-statement blockquote { font-size: 34px; line-height: 1.2; }
+}

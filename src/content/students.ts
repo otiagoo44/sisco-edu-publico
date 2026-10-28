@@ -1,7 +1,7 @@
 import type { Student } from "./types";
 
 // Fuente: material-final/mensajes.txt. Ortega ampliado por pedido expreso del autor.
-// Emojis editoriales aplicados con autorización. Arturo y Nahuel aún no enviaron mensaje.
+// Emojis editoriales aplicados con autorización. Arturo y Nahuel actualizados desde sus documentos en docs/.
 export const students: Student[] = [
   {
     "id": "ortega",
@@ -83,9 +83,9 @@ export const students: Student[] = [
       "alt": "Retrato de Nahuel",
       "fit": "contain"
     },
-    "message": "",
+    "message": "Hola prof. Danilo, gracias por la paciencia y el aguante, especialmente por aguantarme a mí jajaja. Gracias por enseñarnos y estar con nosotros",
     "order": 7,
-    "status": "draft"
+    "status": "published"
   },
   {
     "id": "arturo",
@@ -95,8 +95,8 @@ export const students: Student[] = [
       "alt": "Retrato de Arturo",
       "fit": "contain"
     },
-    "message": "",
+    "message": "Danilo, después de tanto escuchar \"no veo su producción\" ya va siendo hora de que veas  nuestra última producción. Asi que, sigan viendo.",
     "order": 8,
-    "status": "draft"
+    "status": "published"
   }
 ];

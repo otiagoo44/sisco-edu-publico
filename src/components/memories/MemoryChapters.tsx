@@ -2,17 +2,19 @@ import type { ReactNode } from "react";
 import type { Memory } from "../../content/types";
 import { ChapterImage, ChapterVideo } from "./ChapterMedia";
 
-type Props = { memory: Memory; photoIndex: number; paused: boolean; onPlayingChange: (playing: boolean) => void };
+type Props = { memory: Memory; photoIndex: number; paused: boolean; onPlayingChange: (playing: boolean) => void; onVideoComplete: () => void; automatic: boolean };
 function ChapterLayout({
   memory,
   photoIndex,
   decoration,
   paused,
   onPlayingChange,
+  onVideoComplete,
+  automatic,
 }: Props & { decoration?: ReactNode }) {
   const media = memory.media[photoIndex];
   const image = media?.type === "image" ? media.image : undefined;
-  const companion = memory.composition !== "construction" && media?.type === "image"
+  const companion = memory.composition === "travel" && media?.type === "image" && photoIndex > 0
     ? memory.media.find((item) => item.type === "image" && item !== media)
     : undefined;
   const next = companion?.type === "image" ? companion.image : undefined;
@@ -28,12 +30,12 @@ function ChapterLayout({
         <p className="memory-overline">
           {memory.date?.confirmed ? memory.date.label : "Con el profe Danilo"}
         </p>
-        <h1 tabIndex={-1}>{memory.title}</h1>
+        <h1 tabIndex={-1}>{memory.title.split(' ').map((word,i)=><span className="memory-word-shell" key={i}><span className="memory-word">{word}</span>{' '}</span>)}</h1>
         <p className="memory-description">{memory.description}</p>
       </div>
       <div className="memory-art">
         {decoration}
-        {media?.type === "video" ? <ChapterVideo key={media.src} media={media} paused={paused} onPlayingChange={onPlayingChange} /> : image ? (
+        {media?.type === "video" ? <ChapterVideo key={media.src} media={media} paused={paused} onPlayingChange={onPlayingChange} automatic={automatic} onComplete={onVideoComplete} /> : image ? (
           <>
             <ChapterImage
               key={image.src}

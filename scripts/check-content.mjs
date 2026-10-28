@@ -45,7 +45,7 @@ async function mediaExists(items, chapter) {
     if (!media.caption?.trim()) throw new Error("Falta caption: " + chapter);
     if (media.type === "image") {
       await imageExists(media.image);
-      if (media.holdSeconds !== undefined && media.holdSeconds < 5) throw new Error("Tiempo insuficiente de lectura");
+      if (media.holdSeconds !== undefined && media.holdSeconds < 1.5) throw new Error("Tiempo insuficiente de lectura");
     } else if (media.type === "video") {
       await imageExists({src:media.poster,alt:media.alt});
       const root = path.resolve('public/media');

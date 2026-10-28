@@ -51,18 +51,29 @@ export function PendingMedia({ label }: { label: string }) {
   ) : null;
 }
 
-export function ChapterVideo({ media, paused = false, onPlayingChange }: {
+export function ChapterVideo({ media, paused = false, onPlayingChange, automatic = false, onComplete }: {
   media: MemoryVideo;
+  automatic?: boolean;
+  onComplete?: () => void;
   paused?: boolean;
   onPlayingChange?: (playing: boolean) => void;
 }) {
   const video = useRef<HTMLVideoElement>(null);
   const resume = useRef(false);
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(!automatic);
   const [ended, setEnded] = useState(false);
   const [failed, setFailed] = useState(false);
   const [blocked, setBlocked] = useState(false);
+  const attempted = useRef(false);
+  useEffect(() => {
+    if (!automatic || paused || attempted.current) return;
+    attempted.current = true;
+    const node = video.current;
+    if (!node) return;
+    node.muted = false;
+    node.play().catch(() => { setBlocked(true); node.muted = true; setMuted(true); node.play().catch(() => setBlocked(true)); });
+  }, [automatic, paused]);
   const start = media.start ?? 0;
   const end = media.end ?? media.duration;
   async function play() {
@@ -98,12 +109,12 @@ export function ChapterVideo({ media, paused = false, onPlayingChange }: {
           width={media.width} height={media.height} playsInline controls preload="metadata" muted={muted}
           onLoadedMetadata={() => { if (video.current && start) video.current.currentTime = start; }}
           onPlay={() => { setEnded(false); status(true); }} onPause={() => status(false)}
-          onEnded={() => { setEnded(true); status(false); }}
+          onEnded={() => { setEnded(true); status(false); onComplete?.(); }}
           onVolumeChange={() => setMuted(video.current?.muted ?? true)}
           onTimeUpdate={() => {
             const node = video.current;
             if (node && media.end !== undefined && node.currentTime >= end) {
-              node.pause(); setEnded(true); status(false);
+              node.pause(); setEnded(true); status(false); onComplete?.();
             }
           }}
           onError={() => { setFailed(true); status(false); }}
@@ -114,12 +125,12 @@ export function ChapterVideo({ media, paused = false, onPlayingChange }: {
           {playing ? "Pausar video" : ended ? "Volver a ver el video" : "Reproducir video"}
         </button>
         {media.sound === "available" ? <button className="chapter-control" aria-pressed={!muted}
-          onClick={() => { if (video.current) { video.current.muted = !muted; setMuted(!muted); } }}>
+          onClick={() => { if (video.current) { video.current.muted = !muted; setMuted(!muted); setBlocked(false); } }}>
           {muted ? "Activar sonido del video" : "Silenciar video"}
         </button> : <span>Video sin audio</span>}
       </div>}
       <p className="video-status" aria-live="polite">
-        {failed ? "Los demás recuerdos siguen disponibles." : blocked ? "Pulsá reproducir para iniciar el video." : ended ? "Podés volver a verlo o continuar cuando quieras." : playing ? "La secuencia espera a que termines de verlo." : "El video empieza cuando vos quieras."}
+        {failed ? "Los demás recuerdos siguen disponibles." : blocked ? (playing ? "El navegador bloqueó el sonido. Podés activarlo con el botón de sonido." : "Pulsá reproducir para iniciar el video.") : ended ? "Podés volver a verlo o continuar cuando quieras." : playing ? (automatic ? "" : "La secuencia espera a que termines de verlo.") : automatic ? "Preparando el video…" : "El video empieza cuando vos quieras."}
       </p>
     </div>
   );

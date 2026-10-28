@@ -47,6 +47,7 @@ export function MemoryJourney({
       const tl = gsap.timeline();
       timeline.current = tl;
       if (!reduced) {
+        tl.from('.memory-word', {yPercent: 110, rotation: 3, duration: .45, stagger: .035, ease: 'power4.out'}, 0);
         tl.from(
           ".memory-copy",
           { y: 24, duration: 0.55, ease: "power3.out" },
@@ -75,10 +76,11 @@ export function MemoryJourney({
       const words = (memory.title + " " + memory.description).split(
         /\s+/,
       ).length;
-      const read = Math.max(media?.type === "image" ? media.holdSeconds ?? 7 : 7, words * 0.24 + 1.5);
+      const read = media?.type === "image" ? 1.8 : Math.max(2, words * 0.1);
       tl.addLabel("fully-readable", 0.85);
       tl.to({}, { duration: 0.85 + read + 0.25 }, 0);
-      if (!manual && !reduced && media?.type !== "video")
+      if (!manual && !reduced && media?.type === "image") tl.to(".memory-main-image", {opacity: 0, x: memory.composition === "travel" ? -45 : 0, scale: 0.96, duration: 0.25}, 0.85 + read);
+      if (!manual && media?.type !== "video")
         tl.call(() => {
           if (photoIndex < memory.media.length - 1) setPhotoIndex(photoIndex + 1);
           else if (index < ordered.length - 1) changeChapter(index + 1, true);
@@ -108,9 +110,7 @@ export function MemoryJourney({
     <div
       className="memory-journey"
       data-memory={memory.id}
-      onFocusCapture={(event) => {
-        if (event.target instanceof HTMLButtonElement) setManual(true);
-      }}
+
     >
       <nav className="memory-chapter-nav" aria-label="Capítulos de recuerdos">
         {ordered.map((item, i) => (
@@ -125,7 +125,7 @@ export function MemoryJourney({
         ))}
       </nav>
       <div ref={stage} className="memory-stage">
-        <Chapter memory={memory} photoIndex={photoIndex} paused={paused || extras} onPlayingChange={setPlaying} />
+        <Chapter memory={memory} photoIndex={photoIndex} paused={paused || extras} onPlayingChange={setPlaying} automatic={!manual} onVideoComplete={() => { if (manual) return; if (photoIndex < memory.media.length - 1) setPhotoIndex(photoIndex + 1); else if (index < ordered.length - 1) changeChapter(index + 1, true); else onComplete(); }} />
       </div>
       <div className="memory-controls">
         {memory.media.length > 1 && (

@@ -80,7 +80,7 @@ export function StudentsChapter({
       </header>
       {current ? (
         <>
-          <div className="student-feature">
+          <div className={"student-feature" + (current.id === "arturo" ? " is-course-message" : "")}>
             <ChapterImage
               key={current.id}
               image={current.photo!}
@@ -112,9 +112,9 @@ export function StudentsChapter({
             </button>
             <button
               className="chapter-control"
-              onClick={() => select((index + 1) % items.length)}
+              onClick={() => current.id === "arturo" ? onContinue() : select((index + 1) % items.length)}
             >
-              Siguiente compañero →
+              {current.id === "arturo" ? "Seguir viendo →" : "Siguiente compañero →"}
             </button>
           </nav>
         </>
