@@ -44,7 +44,7 @@ export function PhotoMontage({ photos }: { photos: Photo[] }) {
       >
         <p>Antes de seguir...</p>
         <h1>
-          <KineticText text="Ahora sí: los recuerdos." />
+          <KineticText text="¿Te acordás de esto?" />
         </h1>
         <span className="prequestion-arrow" aria-hidden="true">
           ↘
