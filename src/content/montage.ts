@@ -1,10 +1,10 @@
-// Each photograph appears once in the full journey. Index 4 is an older crop of
-// colectivo.webp; indices 8/10 are near-identical poses, intentionally omitted.
+// No repeats before acceptance. The restored closing collage deliberately
+// reprises the professor's photographs, as requested by the promotion.
 export const montageGroups = [
-  { title: "Candidato encontrado.", className: "formal", items: [7, "/media/recuerdos/extras/en-clase.webp", "/media/recuerdos/grupo-aula.webp"] },
+  { title: "Candidato encontrado.", className: "formal", items: [7, "/media/recuerdos/extras/en-clase.webp", 0] },
   { title: "No hay dudas.", className: "playful", items: [2, 3, "/media/recuerdos/extras/selfie.webp"] },
   { title: "Estamos 100% seguros.", className: "confirmed", items: [1, 9, "/media/recuerdos/extras/colectivo.webp"] },
-  { title: "Es por acá, profe.", className: "formal", items: [0, "/media/recuerdos/extras/mesa.webp"] },
+  { title: "Es por acá, profe.", className: "formal", items: [5, "/media/recuerdos/extras/mesa.webp"] },
 ] as const;
 export const montageDescriptions: Record<string, string> = {
   "/media/recuerdos/extras/en-clase.webp": "El profe con camisa celeste en el aula, con la mano junto a la cara",

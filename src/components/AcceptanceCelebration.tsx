@@ -39,8 +39,8 @@ export function AcceptanceCelebration({
           INFORMÁTICA.
         </p>
       </div>
-      <div className="celebration-collage celebration-single">
-        {[5].map((index, slot) => (
+      <div className="celebration-collage">
+        {[0, 3, 6, 9, 1, 4].map((index, slot) => (
           <PhotoFrame
             key={index}
             photo={photos[index]}

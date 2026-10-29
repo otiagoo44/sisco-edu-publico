@@ -43,15 +43,15 @@ export const memories: Memory[] = [
   },
 ];
 
-// Before the students: the short gesture repeats three times, the encounter
-// twice. Finite native loops keep the film moving without requiring a click.
+// Before the students: the short gesture repeats three times; the longer
+// encounter plays once, then continues automatically.
 memories.push({
   id: "momentos", navLabel: "Un momento más", title: "Antes de ponernos serios…",
   description: "Quedaron estos videos.", order: 6, composition: "competition",
   media: [
     { type: "video", order: 1, chapter: "momentos", src: "/media/videos/gesto.mp4", poster: "/media/videos/gesto.webp", alt: "El profe hace un gesto con la mano junto a la cara en el aula", caption: "Un segundo que quedó grabado.", duration: 1.15, width: 464, height: 832, sound: "silent", repeatCount: 3 },
     { type: "video", order: 2, chapter: "momentos", src: "/media/videos/sombrero.mp4", poster: "/media/videos/sombrero.webp", alt: "El profe lleva un sombrero de vaquero y sonríe en el aula", caption: "Con sombrero.", duration: 3.8, width: 576, height: 1024, sound: "available" },
-    { type: "video", order: 3, chapter: "momentos", src: "/media/videos/encuentro.mp4", poster: "/media/videos/encuentro.webp", alt: "Tres personas al frente de una reunión con un texto bíblico en la pared", caption: "Un encuentro compartido.", duration: 16.16, width: 720, height: 1280, sound: "available", repeatCount: 2 },
+    { type: "video", order: 3, chapter: "momentos", src: "/media/videos/encuentro.mp4", poster: "/media/videos/encuentro.webp", alt: "Tres personas al frente de una reunión con un texto bíblico en la pared", caption: "Un encuentro compartido.", duration: 16.16, width: 720, height: 1280, sound: "available", repeatCount: 1 },
   ],
 });
 

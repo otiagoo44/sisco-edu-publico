@@ -21,7 +21,7 @@ for (const blocked of [false,true]) test(`montaje continuo sin tocar controles, 
       const src=img.getAttribute('src')!;
       if(pictures.get(img)===src)return;
       pictures.set(img,src);
-      if(seen.has(src))duplicates.push(src);else seen.add(src);
+      if(seen.has(src)&&document.querySelector('main')?.dataset.state!=='accepted')duplicates.push(src);else seen.add(src);
     });
     new MutationObserver(inspect).observe(document.querySelector('main')!,{childList:true,subtree:true,attributes:true,attributeFilter:['src']});
     const times=new WeakMap<HTMLVideoElement,number>();
@@ -50,7 +50,7 @@ for (const blocked of [false,true]) test(`montaje continuo sin tocar controles, 
   await expect(page.locator('.student-name')).toHaveText('Ortega');
   const wraps=await page.evaluate(()=>(window as unknown as {wraps:Record<string,number>}).wraps);
   expect(Object.entries(wraps).find(([src])=>src.includes('gesto.mp4'))?.[1]).toBeGreaterThanOrEqual(3);
-  expect(Object.entries(wraps).find(([src])=>src.includes('encuentro.mp4'))?.[1]).toBeGreaterThanOrEqual(2);
+  expect(Object.entries(wraps).find(([src])=>src.includes('encuentro.mp4'))?.[1]??0).toBe(0);
   for(let i=0;i<7;i++)await page.getByRole('button',{name:'Siguiente compañero',exact:false}).click();
   await expect(page.locator('.student-name')).toHaveText('Arturo');
   await page.getByRole('button',{name:'Seguir viendo',exact:false}).click();

@@ -82,7 +82,7 @@ if (published.length !== students.filter(s=>s.status==='published').length) thro
 for (const student of published) await imageExists(student.photo);
 const allMedia = [...memories.flatMap(m=>m.media), ...extraMemories];
 const manifest=JSON.parse(await readFile('public/photos/profe/manifest.json','utf8'));
-const visualSources=[...montageGroups.flatMap(g=>g.items.map(item=>typeof item==='number'?manifest.photos[item].src:item)),...allMedia.filter(m=>m.type==='image').map(m=>m.image.src),...published.map(s=>s.photo.src),manifest.photos[6].src,manifest.photos[5].src];
+const visualSources=[...montageGroups.flatMap(g=>g.items.map(item=>typeof item==='number'?manifest.photos[item].src:item)),...allMedia.filter(m=>m.type==='image').map(m=>m.image.src),...published.map(s=>s.photo.src),manifest.photos[6].src];
 const hashes=new Set();
 for(const src of visualSources){
   const bytes=await readFile(path.resolve('public','.'+src));
@@ -93,6 +93,10 @@ for(const src of visualSources){
   if(src.startsWith('/media/'))await imageExists({src,alt:'Imagen del montaje'});
 }
 const videoPaths=allMedia.filter(m=>m.type==='video').map(m=>m.src);
+// The closing collage is an explicitly requested reprise; no duplicates within it.
+const closingSources=[0,3,6,9,1,4].map(i=>manifest.photos[i].src);
+if(new Set(closingSources).size!==closingSources.length)throw new Error('Foto duplicada dentro de la celebración.');
+for(const src of closingSources)await sharp(path.resolve('public','.'+src)).stats();
 if(new Set(videoPaths).size!==videoPaths.length)throw new Error('Video repetido entre escenas; usá repeatCount para bucles intencionales.');
 console.log(
   memories.length +

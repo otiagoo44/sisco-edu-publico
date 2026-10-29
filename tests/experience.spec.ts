@@ -51,7 +51,7 @@ test('ocho textos completos, Fio corregida y Arturo último y destacado',async({
   await page.keyboard.press('Escape');
   await expect(page.getByRole('button',{name:'Ver todos (8)'})).toBeFocused();
 });
-test('animación de agradecimiento antes de la pregunta y celebración sin fotos repetidas',async({page,isMobile})=>{
+test('animación de agradecimiento antes de la pregunta y collage de celebración restaurado',async({page,isMobile})=>{
   await messages(page);
   await expect(page.getByRole('button',{name:'Ir a la pregunta'})).toHaveCount(0);
   await page.getByRole('button',{name:'Ver todos (8)'}).click();
@@ -75,7 +75,9 @@ test('animación de agradecimiento antes de la pregunta y celebración sin fotos
   }
   await page.getByRole('button',{name:'SÍ',exact:true}).click();
   await expect(page.locator('main')).toHaveAttribute('data-state','accepted');
-  await expect(page.locator('.celebration-collage img')).toHaveCount(1);
+  await expect(page.locator('.celebration-collage img')).toHaveCount(6);
+  const closingSources=await page.locator('.celebration-collage img').evaluateAll(imgs=>imgs.map(img=>img.getAttribute('src')));
+  expect(new Set(closingSources).size).toBe(6);
   await expect(page.getByRole('button',{name:/Ver de nuevo|Repetir|Ver las fotos|Saltar/})).toHaveCount(0);
 });
 test('teclado, contraste y responsive con los controles de testimonios',async({page})=>{
