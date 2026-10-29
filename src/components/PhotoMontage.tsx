@@ -1,11 +1,8 @@
 import { PhotoFrame, type Photo } from "../photos";
 import { KineticText } from "./KineticText";
-// Nine originals, ordered deliberately: formal, spontaneous, then playful.
-export const montageGroups = [
-  { title: "Candidato encontrado.", indices: [7, 5, 10], className: "formal" },
-  { title: "Hay pruebas.", indices: [2, 3, 4], className: "playful" },
-  { title: "No hay dudas.", indices: [1, 9, 0], className: "confirmed" },
-];
+import { montageGroups, montageDescriptions } from "../content/montage";
+export { montageGroups } from "../content/montage";
+// Four blocks with unique originals; the reserved portraits appear only later.
 export function PhotoMontage({ photos }: { photos: Photo[] }) {
   return (
     <div className="montage-scene">
@@ -18,7 +15,7 @@ export function PhotoMontage({ photos }: { photos: Photo[] }) {
           data-kind="photo"
           data-composition={group.className}
           aria-hidden="true"
-          key={group.className}
+          key={group.title}
         >
           <div className="composition-copy">
             <span className="composition-counter" aria-hidden="true">
@@ -29,12 +26,12 @@ export function PhotoMontage({ photos }: { photos: Photo[] }) {
             </h1>
           </div>
           <div className="composition-photos">
-            {group.indices.map((index, slot) => (
-              <PhotoFrame
-                key={index}
-                photo={photos[index]}
-                className={"montage-photo photo-slot-" + slot}
-              />
+            {group.items.map((item, slot) => typeof item === "number" ? (
+              <PhotoFrame key={item} photo={photos[item]} className={"montage-photo photo-slot-" + slot} />
+            ) : (
+              <div key={item} className={"photo-frame montage-photo photo-slot-" + slot} data-photo-id={item}>
+                <img src={item} alt={montageDescriptions[item]} style={{objectFit:"contain"}} />
+              </div>
             ))}
           </div>
         </section>
@@ -47,7 +44,7 @@ export function PhotoMontage({ photos }: { photos: Photo[] }) {
       >
         <p>Antes de seguir...</p>
         <h1>
-          <KineticText text="¿Se acuerda de esto, profe?" />
+          <KineticText text="Ahora sí: los recuerdos." />
         </h1>
         <span className="prequestion-arrow" aria-hidden="true">
           ↘

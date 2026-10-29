@@ -66,6 +66,19 @@ export function ChapterVideo({ media, paused = false, onPlayingChange, automatic
   const [failed, setFailed] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const attempted = useRef(false);
+  const previousTime = useRef(0);
+  const repetitions = useRef(0);
+  const completed = useRef(false);
+  function complete() {
+    if (completed.current) return;
+    completed.current = true;
+    setEnded(true); status(false); onComplete?.();
+  }
+  useEffect(() => {
+    if (!failed || !automatic || paused) return;
+    const timer=window.setTimeout(complete,2500);
+    return()=>window.clearTimeout(timer);
+  },[failed,automatic,paused,onComplete]);
   useEffect(() => {
     if (!automatic || paused || attempted.current) return;
     attempted.current = true;
@@ -106,13 +119,18 @@ export function ChapterVideo({ media, paused = false, onPlayingChange, automatic
         </div>
       ) : (
         <video ref={video} src={media.src} poster={media.poster} aria-label={media.alt}
-          width={media.width} height={media.height} playsInline controls preload="metadata" muted={muted}
+          width={media.width} height={media.height} playsInline controls preload="metadata" muted={muted} loop={(media.repeatCount ?? 1) > 1}
           onLoadedMetadata={() => { if (video.current && start) video.current.currentTime = start; }}
           onPlay={() => { setEnded(false); status(true); }} onPause={() => status(false)}
-          onEnded={() => { setEnded(true); status(false); onComplete?.(); }}
+          onEnded={complete}
           onVolumeChange={() => setMuted(video.current?.muted ?? true)}
           onTimeUpdate={() => {
             const node = video.current;
+            if (node?.loop) {
+              if (node.currentTime + .2 < previousTime.current) repetitions.current++;
+              previousTime.current = node.currentTime;
+              if (repetitions.current >= (media.repeatCount ?? 1)) { node.pause(); complete(); }
+            }
             if (node && media.end !== undefined && node.currentTime >= end) {
               node.pause(); setEnded(true); status(false); onComplete?.();
             }

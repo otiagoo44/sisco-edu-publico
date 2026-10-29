@@ -3,13 +3,9 @@ import { PhotoFrame, type Photo } from "../photos";
 export function AcceptanceCelebration({
   photos,
   reduced,
-  onReplay,
-  onMemories,
 }: {
   photos: Photo[];
   reduced: boolean;
-  onReplay: () => void;
-  onMemories: () => void;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -42,17 +38,9 @@ export function AcceptanceCelebration({
           AHORA SOS EL PADRINO DE LA MEJOR PROMO DE BACHILLERATO TÉCNICO EN
           INFORMÁTICA.
         </p>
-        <div className="accepted-actions">
-          <button className="button primary" onClick={onMemories}>
-            Ver las fotos <span aria-hidden="true">↗</span>
-          </button>
-          <button className="text-button" onClick={onReplay}>
-            Ver de nuevo
-          </button>
-        </div>
       </div>
-      <div className="celebration-collage">
-        {[0, 3, 6, 9, 1, 4].map((index, slot) => (
+      <div className="celebration-collage celebration-single">
+        {[5].map((index, slot) => (
           <PhotoFrame
             key={index}
             photo={photos[index]}

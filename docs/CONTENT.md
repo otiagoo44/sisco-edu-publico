@@ -1,5 +1,7 @@
 # Contenido final y mantenimiento
 
+Última actualización: el recorrido ya no tiene galerías repetidas ni controles de capítulos, salto o repetición. Los extras seleccionados forman parte del montaje inicial y los videos forman un capítulo antes de los alumnos. Los bucles nativos se limitan con `repeatCount` (gesto: 3; encuentro: 2), y continúan automáticamente. Tras el último testimonio, sólo «Seguir viendo» inicia el nuevo estado `before-question` y sus cuatro frases. La distribución vigente está en [MEDIA-PLACEMENT.md](MEDIA-PLACEMENT.md), que sustituye las ubicaciones históricas indicadas más abajo.
+
 Actualización de reproducción: el recorrido principal ahora avanza automáticamente con 1,8 segundos de permanencia por foto, además de sus transiciones. Los videos intentan iniciar con sonido y continúan al siguiente recuerdo al terminar. Si el navegador bloquea el sonido, se intenta autoplay silenciado con un control explícito para activarlo. Usar la navegación de capítulos/fotos cambia a exploración manual; Repetir capítulo retoma el montaje. Los testimonios y la galería complementaria siguen siendo manuales. Estas reglas reemplazan las indicaciones anteriores de click-to-play para el recorrido principal.
 
 El material original está en `material-final/` y permanece intacto. El inventario completo con clasificación visual, duplicados, destinos y hashes está en [MEDIA-INVENTORY.md](MEDIA-INVENTORY.md). El dragón y el arca fueron proyectos de robótica simultáneos, confirmado por el autor.

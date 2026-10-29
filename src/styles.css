@@ -2496,6 +2496,21 @@ button:active {
 }
 .memory-word-shell { display: inline-block; overflow: clip; vertical-align: bottom; padding-bottom: .1em; margin-bottom: -.1em; margin-inline-end: .22em; }
 .memory-word { display: inline-block; }
+.question-lead-in { position: relative; min-height: calc(100svh - 148px); background: var(--color-canvas); color: var(--color-ink); }
+.question-lead-line { position: absolute; inset: 0; display: flex; align-items: center; padding: 8%; visibility: hidden; font-size: clamp(36px,6.5vw,92px); line-height: 1.08; letter-spacing: -.045em; font-weight: 600; text-wrap: balance; }
+.stage-before-question { background: var(--color-canvas); color: var(--color-ink); }
+.celebration-single .party-photo-0 { width: 65%; height: 85%; top: 5%; left: 18%; transform: rotate(-4deg); }
+.celebration-single .party-photo-0 img { object-fit: contain; }
+.montage-photo { height: auto !important; bottom: auto !important; background: transparent; }
+.montage-photo.photo-slot-2 { top: 12%; }
+.montage-photo img { height: auto; object-fit: contain; }
+.montage-photo[data-photo-id="/media/recuerdos/grupo-aula.webp"] { width: 62%; z-index: 2; top: auto !important; bottom: 0 !important; }
+.montage-photo[data-photo-id="/media/recuerdos/extras/selfie.webp"] { width: 48%; z-index: 2; }
+.composition-playful .photo-slot-2 { top: 60%; }
+.memory-journey { justify-content: center; }
+.memory-journey .memory-stage { flex: 0; }
+.memory-composition.has-media { min-height: calc(100svh - 148px); }
+@media(max-width:767px) { .memory-composition.has-media { min-height: 0; } .question-lead-line { padding: 24px; } }
 .student-feature.is-course-message { grid-template-columns: minmax(180px,.55fr) minmax(0,1.45fr); gap: 55px; padding: 45px 0; border-block: 1px solid var(--color-border); }
 .is-course-message .student-portrait { transform: rotate(3deg); max-width: 300px; justify-self: center; }
 .is-course-message .student-name { font-size: 24px; }

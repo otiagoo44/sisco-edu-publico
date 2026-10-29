@@ -74,9 +74,6 @@ export function StudentsChapter({
           <br />
           del profe Danilo?
         </h1>
-        <button className="button primary" onClick={onContinue}>
-          Ir a la pregunta <span aria-hidden="true">↗</span>
-        </button>
       </header>
       {current ? (
         <>

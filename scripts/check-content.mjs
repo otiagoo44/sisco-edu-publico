@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 import { memories, extraMemories } from "../src/content/memories.ts";
 import { students } from "../src/content/students.ts";
 import { publishedStudents } from "../src/content/validation.ts";
+import { montageGroups } from "../src/content/montage.ts";
 
 function unique(items, label) {
   const ids = new Set();
@@ -54,6 +55,7 @@ async function mediaExists(items, chapter) {
       if (media.chapter !== chapter || !media.alt?.trim() || !['available','silent'].includes(media.sound)) throw new Error('Metadatos de video incompletos: ' + media.src);
       if (![media.width,media.height,media.duration].every(n=>Number.isFinite(n)&&n>0)) throw new Error('Dimensiones o duración inválidas: ' + media.src);
       const start=media.start??0, end=media.end??media.duration;
+      if(media.repeatCount!==undefined && (!Number.isInteger(media.repeatCount)||media.repeatCount<1||media.repeatCount>4)) throw new Error('Cantidad de bucles inválida: '+media.src);
       if (!(start >= 0 && end > start && end <= media.duration)) throw new Error('Fragmento inválido: ' + media.src);
       const bytes=await readFile(file);
       if (bytes.toString('ascii',4,8)!=='ftyp' || !bytes.includes(Buffer.from('avc1'))) throw new Error('Se requiere MP4/H.264: '+media.src);
@@ -74,11 +76,24 @@ for (const memory of memories) {
     throw new Error("Sólo se admiten fechas confirmadas: " + memory.id);
   await mediaExists(memory.media, memory.id);
 }
-await mediaExists(extraMemories, 'extras');
+if(extraMemories.length) await mediaExists(extraMemories, 'extras');
 const published = publishedStudents(students);
 if (published.length !== students.filter(s=>s.status==='published').length) throw new Error('Alumno publicado incompleto');
 for (const student of published) await imageExists(student.photo);
 const allMedia = [...memories.flatMap(m=>m.media), ...extraMemories];
+const manifest=JSON.parse(await readFile('public/photos/profe/manifest.json','utf8'));
+const visualSources=[...montageGroups.flatMap(g=>g.items.map(item=>typeof item==='number'?manifest.photos[item].src:item)),...allMedia.filter(m=>m.type==='image').map(m=>m.image.src),...published.map(s=>s.photo.src),manifest.photos[6].src,manifest.photos[5].src];
+const hashes=new Set();
+for(const src of visualSources){
+  const bytes=await readFile(path.resolve('public','.'+src));
+  const {createHash}=await import('node:crypto');
+  const hash=createHash('sha256').update(bytes).digest('hex');
+  if(hashes.has(hash))throw new Error('Foto repetida en el recorrido: '+src);
+  hashes.add(hash);
+  if(src.startsWith('/media/'))await imageExists({src,alt:'Imagen del montaje'});
+}
+const videoPaths=allMedia.filter(m=>m.type==='video').map(m=>m.src);
+if(new Set(videoPaths).size!==videoPaths.length)throw new Error('Video repetido entre escenas; usá repeatCount para bucles intencionales.');
 console.log(
   memories.length +
     " recuerdos; " +

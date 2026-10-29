@@ -38,13 +38,25 @@ export const memories: Memory[] = [
   {
     id: "sisco-edu", navLabel: "SISCO-EDU", title: "Ahora estamos con SISCO-EDU.", description: "Ahora nos toca terminar SISCO-EDU.", order: 5, composition: "workspace",
     media: [
-      { type: "image", order: 1, holdSeconds: 1.8, caption: "Nosotros, en el aula.", image: { src: "/media/recuerdos/grupo-aula.webp", alt: "Foto del curso junto al profe en el aula de paredes amarillas", fit: "contain" } },
+      { type: "image", order: 1, holdSeconds: 1.8, caption: "Profe, todavía falta la última entrega.", image: { src: "/media/recuerdos/extras/retrato.webp", alt: "Retrato informal del profe con camisa azul oscura", fit: "contain" } },
     ],
   },
 ];
 
+// Before the students: the short gesture repeats three times, the encounter
+// twice. Finite native loops keep the film moving without requiring a click.
+memories.push({
+  id: "momentos", navLabel: "Un momento más", title: "Antes de ponernos serios…",
+  description: "Quedaron estos videos.", order: 6, composition: "competition",
+  media: [
+    { type: "video", order: 1, chapter: "momentos", src: "/media/videos/gesto.mp4", poster: "/media/videos/gesto.webp", alt: "El profe hace un gesto con la mano junto a la cara en el aula", caption: "Un segundo que quedó grabado.", duration: 1.15, width: 464, height: 832, sound: "silent", repeatCount: 3 },
+    { type: "video", order: 2, chapter: "momentos", src: "/media/videos/sombrero.mp4", poster: "/media/videos/sombrero.webp", alt: "El profe lleva un sombrero de vaquero y sonríe en el aula", caption: "Con sombrero.", duration: 3.8, width: 576, height: 1024, sound: "available" },
+    { type: "video", order: 3, chapter: "momentos", src: "/media/videos/encuentro.mp4", poster: "/media/videos/encuentro.webp", alt: "Tres personas al frente de una reunión con un texto bíblico en la pared", caption: "Un encuentro compartido.", duration: 16.16, width: 720, height: 1280, sound: "available", repeatCount: 2 },
+  ],
+});
+
 // Su ubicación no está confirmada. No se atribuyen a un viaje o competencia.
-export const extraMemories: MemoryMedia[] = [
+const archivedExtras: MemoryMedia[] = [
   { type: "image", order: 1, caption: "En clase.", image: { src: "/media/recuerdos/extras/en-clase.webp", alt: "El profe en el aula, junto a una computadora", fit: "contain" } },
   { type: "image", order: 2, caption: "Una foto juntos.", image: { src: "/media/recuerdos/extras/selfie.webp", alt: "Selfie de dos alumnas junto al profe", fit: "contain" } },
   { type: "image", order: 3, caption: "En el colectivo.", image: { src: "/media/recuerdos/extras/colectivo.webp", alt: "El profe sonriendo en un colectivo con una almohada rosa alrededor de la cabeza", fit: "contain" } },
@@ -54,3 +66,6 @@ export const extraMemories: MemoryMedia[] = [
   { type: "video", order: 7, chapter: "extras", src: "/media/videos/encuentro.mp4", poster: "/media/videos/encuentro.webp", alt: "Tres personas de pie al frente de una reunión en un salón con un texto bíblico en la pared", caption: "Un encuentro compartido.", duration: 16.16, width: 720, height: 1280, sound: "available" },
   { type: "video", order: 8, chapter: "extras", src: "/media/videos/gesto.mp4", poster: "/media/videos/gesto.webp", alt: "El profe hace un gesto con la mano cerca de la cara, detrás de una división del aula", caption: "Un segundo que quedó grabado.", duration: 1.15, width: 464, height: 832, sound: "silent" },
 ];
+// Kept as source reference; all selected material now belongs to the film.
+export const extraMemories: MemoryMedia[] = [];
+export const archivedExtraMemories = archivedExtras;

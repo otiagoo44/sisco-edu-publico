@@ -36,6 +36,7 @@ export type MemoryVideo = {
   width: number;
   height: number;
   sound: "available" | "silent";
+  repeatCount?: number;
 };
 export type MemoryMedia = MemoryPhoto | MemoryVideo;
 export type Student = {

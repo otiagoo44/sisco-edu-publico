@@ -23,7 +23,7 @@ export const students: Student[] = [
       "alt": "Retrato de Fio",
       "fit": "contain"
     },
-    "message": "Hola señor Danilo, sos muy pesado pero muy buen profesor, te quiero mucho. Siempre te vamos a extrañar cuando terminemos el colegio, gracias por esas torturas de clases en esa carcel con SISCO-EDU. Sos mas pesado que Carlos. Te quiero.",
+    "message": "Hola señor Danilo, sos muy pesado pero muy buen profesor, te quiero mucho. Siempre te vamos a extrañar cuando terminemos el colegio, gracias por esas torturas de clases en esa carcel con SISCO-EDU. Sos mas pesado que mi ex. Te quiero.",
     "order": 2,
     "status": "published"
   },

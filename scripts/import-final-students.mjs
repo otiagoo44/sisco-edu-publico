@@ -10,6 +10,8 @@ const students = entries.map(([_,key,text],i)=>({
 }));
 students[0].message = 'Profe Danilo, gracias por todos estos años de aprendizaje. Marcaste un antes y un después en mi vida. Ver cómo vivís tu fe, cómo te dedicás a tus proyectos y cómo buscás hacer las cosas con excelencia me inspira todos los días a mejorar y a hacer las cosas bien. Me enseñaste que para hacer cosas realmente excelentes hay que salir de la zona de confort y animarse a dar más. Gracias por tu dedicación y por la paciencia que tuviste y seguís teniendo con nosotros. Me ayudaste a formarme como persona y sos una de mis mayores inspiraciones. Gracias por todo, profe.';
 if(students.length!==8) throw new Error('Revisar importación: se esperaban ocho nombres.');
+const fio=students.find(s=>s.id==='fio');
+fio.message=fio.message.replace('Sos mas pesado que Carlos.','Sos mas pesado que mi ex.');
 const arturo=students.find(s=>s.id==='arturo');
 arturo.message=(await readFile('docs/ARTURO-MESSAGE.txt','utf8')).trim();
 arturo.status='published';

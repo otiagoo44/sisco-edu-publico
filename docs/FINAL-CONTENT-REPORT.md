@@ -1,5 +1,7 @@
 # Integración final: Operación Padrino / SISCO-EDU
 
+Última distribución: [MEDIA-PLACEMENT.md](MEDIA-PLACEMENT.md). Fotos sin repetición entre introducción, recuerdos, alumnos, pregunta y celebración; videos de gesto y encuentro en bucles finitos antes de los alumnos. La introducción tiene cuatro bloques de fotos. SISCO-EDU usa el retrato solicitado. Fio dice «Sos mas pesado que mi ex.». Se eliminaron todos los controles de salto/repetición y el botón de cabecera «Ir a la pregunta»; sólo «Seguir viendo» de Arturo inicia el agradecimiento animado y luego la invitación. Evidencia actual en `screenshots/curated/`. Los informes y capturas anteriores se conservan como historial, no representan esta última distribución.
+
 Actualización posterior: los ocho alumnos ya tienen mensaje y fotografía publicados. Nahuel ocupa el séptimo lugar y Arturo cierra con tipografía grande, retrato y «Seguir viendo» hacia la invitación. Los dos textos nuevos se conservan literalmente en `docs/ARTURO-MESSAGE.txt` y `docs/NAHUEL-MESSAGE.txt`. Ahora hay veinte fotografías nuevas publicadas, además de las once anteriores del profesor. No quedan testimonios pendientes. El registro siguiente describe la integración original. El ritmo, encuadres y autoplay fueron revisados posteriormente según `VISUAL-REVISION.md`.
 
 Fecha: 28 de octubre de 2026. Repositorio: `otiagoo44/sisco-edu-publico`. Arquitectura React, TypeScript, Vite y GSAP conservada; sin dependencias nuevas de runtime.

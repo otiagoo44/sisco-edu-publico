@@ -5,6 +5,7 @@ export const states = [
   "montage",
   "memories",
   "students",
+  "before-question",
   "invitation",
   "accepted",
 ] as const;
@@ -29,7 +30,7 @@ export const durations = {
   boot: 4,
   diagnostic: 7.7,
   glitch: 0.45,
-  montage: 17,
+  montage: 21.4,
 } as const;
 export const sequenceDuration = Object.values(durations).reduce(
   (a, b) => a + b,
@@ -46,7 +47,8 @@ export function stageReducer(stage: Stage, action: Action): Stage {
             glitch: "montage",
             montage: "memories",
             memories: "students",
-            students: "invitation",
+            students: "before-question",
+            "before-question": "invitation",
           } as Partial<Record<Stage, Stage>>
         )[stage] ?? stage
       );
